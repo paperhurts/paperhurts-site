@@ -1,0 +1,461 @@
+<!DOCTYPE html>
+<!-- saved from url=(0056)file:///C:/Users/paper/Downloads/paperhurts-landing.html -->
+<html lang="en"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="robots" content="noarchive">
+<title>paperhurts</title>
+<link rel="preconnect" href="https://fonts.googleapis.com/">
+<link rel="preconnect" href="https://fonts.gstatic.com/" crossorigin="">
+<link href="./index_files/css2" rel="stylesheet">
+<style>
+  :root {
+    --bg-deep: #0a0a0f;
+    --bg-surface: #12121a;
+    --bg-card: #1a1a25;
+    --text-primary: #e8e4df;
+    --text-dim: #8a8694;
+    --text-faint: #4a4654;
+    --accent-warm: #c4956a;
+    --accent-glow: #d4a574;
+    --accent-ember: #b8755a;
+    --page-cream: #f5f0e8;
+    --ink: #2a2520;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    background: var(--bg-deep);
+    color: var(--text-primary);
+    font-family: 'Crimson Pro', Georgia, serif;
+    min-height: 100vh;
+    overflow-x: hidden;
+  }
+
+  /* Grain overlay */
+  body::before {
+    content: '';
+    position: fixed;
+    top: 0; left: 0; right: 0; bottom: 0;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.03'/%3E%3C/svg%3E");
+    pointer-events: none;
+    z-index: 1000;
+  }
+
+  /* Ambient light effect */
+  .ambient {
+    position: fixed;
+    top: -30%;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 120vw;
+    height: 60vh;
+    background: radial-gradient(ellipse, rgba(196, 149, 106, 0.04) 0%, transparent 70%);
+    pointer-events: none;
+    z-index: 0;
+  }
+
+  .ambient-bottom {
+    position: fixed;
+    bottom: -20%;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 100vw;
+    height: 40vh;
+    background: radial-gradient(ellipse, rgba(184, 117, 90, 0.03) 0%, transparent 70%);
+    pointer-events: none;
+    z-index: 0;
+  }
+
+  /* Main layout */
+  .container {
+    position: relative;
+    z-index: 1;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 2rem;
+  }
+
+  /* The book / page element */
+  .page {
+    position: relative;
+    max-width: 520px;
+    width: 100%;
+    padding: 3.5rem 3rem;
+    background: linear-gradient(175deg, var(--bg-surface) 0%, var(--bg-card) 100%);
+    border: 1px solid rgba(196, 149, 106, 0.08);
+    border-radius: 2px;
+    box-shadow:
+      0 0 0 1px rgba(196, 149, 106, 0.03),
+      0 20px 60px rgba(0, 0, 0, 0.5),
+      0 1px 3px rgba(0, 0, 0, 0.3),
+      inset 0 1px 0 rgba(255, 255, 255, 0.02);
+    animation: pageAppear 1.2s ease-out;
+  }
+
+  .page::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0;
+    height: 1px;
+    background: linear-gradient(90deg, transparent, rgba(196, 149, 106, 0.15), transparent);
+  }
+
+  /* Spine shadow */
+  .page::after {
+    content: '';
+    position: absolute;
+    top: 8px;
+    left: -1px;
+    bottom: 8px;
+    width: 3px;
+    background: linear-gradient(180deg, transparent, rgba(196, 149, 106, 0.06), transparent);
+    border-radius: 0 1px 1px 0;
+  }
+
+  @keyframes pageAppear {
+    0% { opacity: 0; transform: translateY(20px) scale(0.98); }
+    100% { opacity: 1; transform: translateY(0) scale(1); }
+  }
+
+  /* Logo / Title */
+  .title-block {
+    text-align: center;
+    margin-bottom: 2.5rem;
+  }
+
+  .title {
+    font-family: 'Crimson Pro', Georgia, serif;
+    font-weight: 200;
+    font-size: 3.2rem;
+    letter-spacing: 0.15em;
+    color: var(--text-primary);
+    text-transform: lowercase;
+    line-height: 1;
+    margin-bottom: 0.3rem;
+    animation: titleFade 1.8s ease-out 0.3s both;
+  }
+
+  .title span {
+    color: var(--accent-warm);
+    font-style: italic;
+    font-weight: 300;
+  }
+
+  @keyframes titleFade {
+    0% { opacity: 0; letter-spacing: 0.3em; }
+    100% { opacity: 1; letter-spacing: 0.15em; }
+  }
+
+  .rule {
+    width: 60px;
+    height: 1px;
+    background: linear-gradient(90deg, transparent, var(--accent-warm), transparent);
+    margin: 1.2rem auto;
+    animation: ruleFade 2s ease-out 0.6s both;
+  }
+
+  @keyframes ruleFade {
+    0% { opacity: 0; width: 0; }
+    100% { opacity: 1; width: 60px; }
+  }
+
+  .subtitle {
+    font-family: 'JetBrains Mono', monospace;
+    font-weight: 300;
+    font-size: 0.7rem;
+    letter-spacing: 0.25em;
+    color: var(--text-dim);
+    text-transform: uppercase;
+    animation: subtitleFade 2s ease-out 0.8s both;
+  }
+
+  @keyframes subtitleFade {
+    0% { opacity: 0; }
+    100% { opacity: 1; }
+  }
+
+  /* Content */
+  .content {
+    animation: contentFade 2s ease-out 1s both;
+  }
+
+  @keyframes contentFade {
+    0% { opacity: 0; transform: translateY(10px); }
+    100% { opacity: 1; transform: translateY(0); }
+  }
+
+  .description {
+    font-size: 1.15rem;
+    font-weight: 300;
+    line-height: 1.75;
+    color: var(--text-dim);
+    text-align: center;
+    margin-bottom: 2.5rem;
+    font-style: italic;
+  }
+
+  .description em {
+    color: var(--accent-glow);
+    font-style: normal;
+  }
+
+  /* Sources line */
+  .sources {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.62rem;
+    letter-spacing: 0.18em;
+    color: var(--text-faint);
+    text-transform: uppercase;
+    text-align: center;
+    margin: -1.5rem 0 2.25rem;
+  }
+
+  /* Features list */
+  .features {
+    display: flex;
+    flex-direction: column;
+    gap: 0.7rem;
+    margin-bottom: 2.25rem;
+    padding: 0 0.5rem;
+  }
+
+  .feature-group-label {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.6rem;
+    font-weight: 400;
+    letter-spacing: 0.25em;
+    color: var(--accent-warm);
+    text-transform: uppercase;
+    opacity: 0.75;
+    margin-top: 0.75rem;
+    margin-bottom: 0.15rem;
+  }
+
+  .feature-group-label:first-child {
+    margin-top: 0;
+  }
+
+  .feature {
+    position: relative;
+    padding-left: 1.4rem;
+    font-size: 0.95rem;
+    color: var(--text-dim);
+    font-weight: 300;
+    line-height: 1.55;
+  }
+
+  .feature::before {
+    content: '\2013';
+    position: absolute;
+    left: 0;
+    top: 0;
+    color: var(--accent-warm);
+  }
+
+  .feature strong {
+    color: var(--text-primary);
+    font-weight: 400;
+  }
+
+  /* CTA / Links */
+  .links {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 1rem;
+    padding-top: 1.5rem;
+    border-top: 1px solid rgba(196, 149, 106, 0.06);
+  }
+
+  .link-primary {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.6rem;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.75rem;
+    font-weight: 400;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: var(--accent-warm);
+    text-decoration: none;
+    padding: 0.75rem 1.5rem;
+    border: 1px solid rgba(196, 149, 106, 0.2);
+    border-radius: 2px;
+    transition: all 0.4s ease;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .link-primary::before {
+    content: '';
+    position: absolute;
+    top: 0; left: -100%;
+    width: 100%; height: 100%;
+    background: linear-gradient(90deg, transparent, rgba(196, 149, 106, 0.05), transparent);
+    transition: left 0.5s ease;
+  }
+
+  .link-primary:hover {
+    border-color: rgba(196, 149, 106, 0.4);
+    color: var(--accent-glow);
+    box-shadow: 0 0 20px rgba(196, 149, 106, 0.05);
+  }
+
+  .link-primary:hover::before {
+    left: 100%;
+  }
+
+  .link-primary svg {
+    width: 16px;
+    height: 16px;
+    fill: currentColor;
+  }
+
+  .status {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.65rem;
+    letter-spacing: 0.2em;
+    color: var(--text-faint);
+    text-transform: uppercase;
+  }
+
+  .coming-note {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.6rem;
+    letter-spacing: 0.18em;
+    color: var(--text-faint);
+    text-transform: uppercase;
+    font-style: normal;
+  }
+
+  .coming-note em {
+    color: var(--accent-warm);
+    font-style: normal;
+    opacity: 0.85;
+  }
+
+  .status .dot {
+    display: inline-block;
+    width: 6px;
+    height: 6px;
+    background: var(--accent-ember);
+    border-radius: 50%;
+    margin-right: 0.5rem;
+    animation: pulse 3s ease-in-out infinite;
+    vertical-align: middle;
+  }
+
+  @keyframes pulse {
+    0%, 100% { opacity: 0.4; }
+    50% { opacity: 1; box-shadow: 0 0 8px rgba(184, 117, 90, 0.4); }
+  }
+
+  /* Footer */
+  .footer {
+    margin-top: 3rem;
+    text-align: center;
+    animation: footerFade 2s ease-out 1.5s both;
+  }
+
+  @keyframes footerFade {
+    0% { opacity: 0; }
+    100% { opacity: 1; }
+  }
+
+  .footer p {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.6rem;
+    letter-spacing: 0.2em;
+    color: var(--text-faint);
+    text-transform: uppercase;
+  }
+
+  /* Responsive */
+  @media (max-width: 580px) {
+    .page { padding: 2.5rem 2rem; }
+    .title { font-size: 2.4rem; }
+    .description { font-size: 1.05rem; }
+  }
+
+  /* Cursor glow effect */
+  .cursor-glow {
+    position: fixed;
+    width: 300px;
+    height: 300px;
+    background: radial-gradient(circle, rgba(196, 149, 106, 0.015) 0%, transparent 70%);
+    pointer-events: none;
+    z-index: 0;
+    transform: translate(-50%, -50%);
+    transition: left 0.3s ease, top 0.3s ease;
+  }
+</style>
+</head>
+<body>
+
+<div class="ambient"></div>
+<div class="ambient-bottom"></div>
+<div class="cursor-glow" id="cursorGlow" style="left: 479px; top: 245px;"></div>
+
+<div class="container">
+  <div class="page">
+    <div class="title-block">
+      <h1 class="title">paper<span>hurts</span></h1>
+      <div class="rule"></div>
+      <p class="subtitle">a personal reading companion</p>
+    </div>
+
+    <div class="content">
+      <p class="description">
+        Your fics. Your library. <em>Your rules.</em><br>
+        Import from anywhere, read it your way,<br>
+        and keep every word on your own machine.
+      </p>
+
+      <p class="sources">ao3 · spacebattles · ffn · sufficient velocity · &amp; more</p>
+
+      <div class="features">
+        <div class="feature-group-label">The reading experience</div>
+        <div class="feature"><strong>Seven themes, or build your own</strong> — sepia, AMOLED night, solarized, and a custom color builder</div>
+        <div class="feature"><strong>Read aloud, screen off</strong> — narration with lock-screen controls and a sleep timer</div>
+        <div class="feature"><strong>Your fonts, your place</strong> — typography you control, position that follows you everywhere</div>
+        <div class="feature"><strong>Reads offline</strong> — installs like an app, works without signal</div>
+
+        <div class="feature-group-label">Yours, entirely</div>
+        <div class="feature"><strong>No accounts, self-hosted</strong> — your library never leaves your machine</div>
+        <div class="feature"><strong>Export to clean EPUB</strong> — take any story with you, anytime</div>
+      </div>
+
+      <div class="links">
+        <!-- Repo is PRIVATE for now. When it goes public, restore this button:
+        <a href="https://github.com/paperhurts/paperhurts-reader" class="link-primary" target="_blank" rel="noopener">
+          <svg viewBox="0 0 24 24"><path d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0024 12c0-6.63-5.37-12-12-12z"></path></svg>
+          View on GitHub
+        </a>
+        -->
+        <p class="status"><span class="dot"></span>Live &amp; self-hosted</p>
+        <p class="coming-note"><em>On the way</em> — file import &amp; graphic novels</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="footer">
+    <p>© 2026 paperhurts</p>
+  </div>
+</div>
+
+<script>
+  // Subtle cursor glow
+  const glow = document.getElementById('cursorGlow');
+  document.addEventListener('mousemove', (e) => {
+    glow.style.left = e.clientX + 'px';
+    glow.style.top = e.clientY + 'px';
+  });
+</script>
+
+
+</body></html>
