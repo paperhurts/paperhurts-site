@@ -1,0 +1,718 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="robots" content="noarchive">
+<meta name="description" content="How to install, read, listen and import in paperhurts Reader — a guide for invited readers.">
+<title>User guide · paperhurts</title>
+<link rel="preconnect" href="https://fonts.gstatic.com/" crossorigin="">
+<link href="../index_files/fonts.css" rel="stylesheet">
+<style>
+  :root {
+    --bg-deep: #0a0a0f;
+    --bg-surface: #12121a;
+    --bg-card: #1a1a25;
+    --text-primary: #e8e4df;
+    --text-body: #d6d1ca;
+    --text-dim: #8a8694;
+    --text-faint: #4a4654;
+    --accent-warm: #c4956a;
+    --accent-glow: #d4a574;
+    --accent-ember: #b8755a;
+    --rule: rgba(196, 149, 106, 0.12);
+  }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  html { scroll-behavior: smooth; }
+  body {
+    background: var(--bg-deep);
+    color: var(--text-body);
+    font-family: 'Crimson Pro', Georgia, serif;
+    font-size: 1.2rem;
+    font-weight: 400;
+    line-height: 1.7;
+    min-height: 100vh;
+    overflow-x: hidden;
+    -webkit-text-size-adjust: 100%;
+  }
+  /* Grain + ambient light, as on the landing page */
+  body::before {
+    content: '';
+    position: fixed; inset: 0;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.03'/%3E%3C/svg%3E");
+    pointer-events: none;
+    z-index: 1000;
+  }
+  .ambient {
+    position: fixed; top: -30%; left: 50%; transform: translateX(-50%);
+    width: 120vw; height: 60vh;
+    background: radial-gradient(ellipse, rgba(196, 149, 106, 0.04) 0%, transparent 70%);
+    pointer-events: none; z-index: 0;
+  }
+  .wrap {
+    position: relative; z-index: 1;
+    max-width: 700px;
+    margin: 0 auto;
+    padding: 2.5rem 2rem 4rem;
+  }
+  .home {
+    display: inline-block;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.7rem;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--text-dim);
+    text-decoration: none;
+    margin-bottom: 2.5rem;
+  }
+  .home:hover { color: var(--accent-glow); }
+  header { text-align: center; margin-bottom: 2.5rem; }
+  h1 {
+    font-weight: 200;
+    font-size: 2.6rem;
+    letter-spacing: 0.08em;
+    text-transform: lowercase;
+    color: var(--text-primary);
+    line-height: 1.15;
+  }
+  h1 span { color: var(--accent-warm); font-style: italic; font-weight: 300; }
+  .rule {
+    width: 60px; height: 1px; margin: 1.2rem auto;
+    background: linear-gradient(90deg, transparent, var(--accent-warm), transparent);
+  }
+  .subtitle {
+    font-family: 'JetBrains Mono', monospace;
+    font-weight: 300;
+    font-size: 0.68rem;
+    letter-spacing: 0.25em;
+    color: var(--text-dim);
+    text-transform: uppercase;
+  }
+  nav.toc {
+    background: linear-gradient(175deg, var(--bg-surface) 0%, var(--bg-card) 100%);
+    border: 1px solid rgba(196, 149, 106, 0.08);
+    border-radius: 2px;
+    padding: 1.25rem 1.5rem;
+    margin-bottom: 3rem;
+  }
+  nav.toc p {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.6rem;
+    letter-spacing: 0.25em;
+    color: var(--accent-warm);
+    text-transform: uppercase;
+    opacity: 0.8;
+    margin-bottom: 0.5rem;
+  }
+  nav.toc ol { list-style: none; counter-reset: toc; padding-left: 0; margin-bottom: 0; }
+  nav.toc li { counter-increment: toc; padding: 0.15rem 0; }
+  nav.toc li::before {
+    content: counter(toc, decimal-leading-zero);
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.7rem;
+    color: var(--text-faint);
+    margin-right: 0.8rem;
+  }
+  nav.toc a { color: var(--text-primary); text-decoration: none; }
+  nav.toc a:hover { color: var(--accent-glow); }
+  main > p:first-child { color: var(--text-primary); font-size: 1.3rem; font-weight: 300; }
+  h2 {
+    font-weight: 300;
+    font-size: 2rem;
+    color: var(--text-primary);
+    letter-spacing: 0.02em;
+    margin: 3.5rem 0 1rem;
+    padding-top: 1.5rem;
+    border-top: 1px solid var(--rule);
+    scroll-margin-top: 1rem;
+  }
+  h3 {
+    font-weight: 600;
+    font-size: 1.3rem;
+    color: var(--accent-glow);
+    margin: 2.2rem 0 0.6rem;
+    scroll-margin-top: 1rem;
+  }
+  h2 .anchor, h3 .anchor {
+    float: left;
+    margin-left: -1.1em;
+    width: 1em;
+    color: var(--text-faint);
+    text-decoration: none;
+    opacity: 0;
+  }
+  h2:hover .anchor, h3:hover .anchor { opacity: 1; }
+  p, ul, ol { margin-bottom: 1rem; }
+  ul, ol { padding-left: 1.4rem; }
+  ul { list-style: none; }
+  ul > li { position: relative; }
+  ul > li::before {
+    content: '\2013';
+    position: absolute;
+    left: -1.2rem;
+    color: var(--accent-warm);
+  }
+  ol > li::marker {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.85em;
+    color: var(--accent-warm);
+  }
+  li { margin-bottom: 0.35rem; }
+  li > ul, li > ol { margin: 0.35rem 0 0; }
+  strong { color: var(--text-primary); font-weight: 600; }
+  em { color: var(--accent-glow); }
+  a { color: var(--accent-warm); text-decoration-line: underline; text-decoration-style: dotted; text-underline-offset: 3px; }
+  a:hover { color: var(--accent-glow); }
+  code {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.8em;
+    background: var(--bg-card);
+    border: 1px solid var(--rule);
+    border-radius: 2px;
+    padding: 0.05em 0.35em;
+    overflow-wrap: anywhere;
+  }
+  figure {
+    margin: 1.75rem auto 2rem;
+    text-align: center;
+  }
+  figure img {
+    display: block;
+    margin: 0 auto;
+    width: min(100%, 300px);
+    height: auto;
+    border: 1px solid rgba(196, 149, 106, 0.18);
+    border-radius: 18px;
+    box-shadow: 0 20px 60px rgba(0, 0, 0, 0.5), 0 1px 3px rgba(0, 0, 0, 0.3);
+    background: var(--bg-surface);
+  }
+  figcaption {
+    margin: 0.8rem auto 0;
+    max-width: 30rem;
+    font-size: 0.95rem;
+    font-style: italic;
+    color: var(--text-dim);
+    line-height: 1.5;
+  }
+  footer {
+    margin-top: 4rem;
+    padding-top: 1.5rem;
+    border-top: 1px solid var(--rule);
+    text-align: center;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.62rem;
+    letter-spacing: 0.2em;
+    color: var(--text-faint);
+    text-transform: uppercase;
+  }
+  footer a { color: var(--text-dim); text-decoration: none; }
+  footer a:hover { color: var(--accent-glow); }
+  @media (max-width: 580px) {
+    body { font-size: 1.12rem; }
+    .wrap { padding: 1.75rem 16px 3rem; }
+    h1 { font-size: 2.1rem; }
+    h2 { font-size: 1.7rem; margin-top: 2.75rem; }
+    nav.toc { padding: 1rem 1.1rem; }
+    h2 .anchor, h3 .anchor { display: none; }
+  }
+</style>
+</head>
+<body>
+<div class="ambient"></div>
+<div class="wrap">
+  <a class="home" href="../">&larr; paperhurts</a>
+  <header>
+    <h1>paper<span>hurts</span> reader</h1>
+    <div class="rule"></div>
+    <p class="subtitle">user guide</p>
+  </header>
+  <nav class="toc" aria-label="Contents">
+    <p>Contents</p>
+    <ol><li><a href="#getting-in">Getting in</a></li><li><a href="#your-library">Your library</a></li><li><a href="#reading">Reading</a></li><li><a href="#listening">Listening</a></li><li><a href="#on-the-go">On the go</a></li><li><a href="#troubleshooting">Troubleshooting</a></li></ol>
+  </nav>
+  <main>
+<p>paperhurts Reader is a private reading app for long fiction. It keeps your
+stories in one library, reads them to you out loud (even with the screen
+locked), remembers your place on every device, and keeps working when you
+lose signal.</p>
+<p>This guide is for someone who has just been invited. You don't need to know
+anything technical — only how to use an iPhone.</p>
+<h2 id="getting-in"><a class="anchor" href="#getting-in" aria-hidden="true" tabindex="-1">#</a>Getting in</h2>
+<p>You'll need three things from the person who invited you: a link to install
+the iPhone app, an invitation to their private network, and an invite code.
+The steps below take about ten minutes.</p>
+<h3 id="1-install-the-iphone-app"><a class="anchor" href="#1-install-the-iphone-app" aria-hidden="true" tabindex="-1">#</a>1. Install the iPhone app</h3>
+<p>The app isn't in the App Store — the person who invited you builds it for
+your phone.</p>
+<ol>
+<li><strong>If they ask you to register your iPhone first</strong>, they'll send you a
+link for that. Open it in Safari, allow the download, then go to
+<strong>Settings</strong> and tap <strong>Profile Downloaded</strong> near the top to install it.
+This only tells Apple your phone may install the app.</li>
+<li>When they send the <strong>install link</strong>, open it on your iPhone and install
+the app. It appears on your home screen as <strong>paperhurts</strong>.</li>
+<li>The first time you open it, iPhone refuses and says it needs <strong>Developer
+Mode</strong>. That's expected. Open <strong>Settings → Privacy &amp; Security</strong>, scroll
+to the bottom, tap <strong>Developer Mode</strong>, switch it on, and tap <strong>Restart</strong>.
+After the phone restarts and you unlock it, tap <strong>Turn On</strong> when asked.
+(The Developer Mode switch only shows up after the app is installed and
+you've tried to open it once.)</li>
+</ol>
+<h3 id="2-join-the-private-network"><a class="anchor" href="#2-join-the-private-network" aria-hidden="true" tabindex="-1">#</a>2. Join the private network</h3>
+<p>Your library lives on a small private server, and your phone reaches it
+through an app called <strong>Tailscale</strong>.</p>
+<ol>
+<li>Install <strong>Tailscale</strong> from the App Store and sign in.</li>
+<li>Accept the invitation the person who invited you sends.</li>
+<li>Keep Tailscale switched on whenever you want to reach your library. If
+it's off, the reader can't sync, import, or open stories you haven't
+saved for offline reading.</li>
+</ol>
+<h3 id="3-create-your-account"><a class="anchor" href="#3-create-your-account" aria-hidden="true" tabindex="-1">#</a>3. Create your account</h3>
+<ol>
+<li>Open <strong>paperhurts</strong> (with Tailscale on).</li>
+<li>Tap <strong>Register</strong> under the sign-in form.</li>
+<li>Fill in your email, a username, and a password (twice), then type the
+<strong>invite code</strong> the person who invited you gave you. Tap <strong>Register</strong>.</li>
+</ol>
+<p>You land on the <strong>Tonight</strong> screen, signed in. If the app ever asks you to
+sign in again, use the same email and password. (<strong>Logout</strong> is at the top of
+the <strong>Library</strong> tab, next to a <strong>User guide</strong> button that opens this guide.)</p>
+<p>Your library belongs to your account: other people who use the same server
+can't see your stories, bookmarks, or notes.</p>
+<h3 id="prefer-safari"><a class="anchor" href="#prefer-safari" aria-hidden="true" tabindex="-1">#</a>Prefer Safari?</h3>
+<p>You can also use Reader in Safari instead of the app. With Tailscale on,
+open the web address the person who invited you gives you, sign in, then tap
+<strong>Share → Add to Home Screen</strong> so it opens like an app.</p>
+<p>Reading works the same in both. For <strong>listening</strong>, use the iPhone app:
+narration there keeps playing with the screen locked and works with the
+lock screen, CarPlay and Bluetooth. In Safari it's less dependable once the
+screen locks. Sharing to Reader from other apps also needs the iPhone app.</p>
+<h2 id="your-library"><a class="anchor" href="#your-library" aria-hidden="true" tabindex="-1">#</a>Your library</h2>
+<p>Four tabs run along the bottom of the screen: <strong>Tonight</strong>, <strong>Library</strong>,
+<strong>Search</strong> and <strong>Import</strong>.</p>
+<h3 id="tonight"><a class="anchor" href="#tonight" aria-hidden="true" tabindex="-1">#</a>Tonight</h3>
+<figure><img src="images/tonight.png" alt="The Tonight screen: a Continue card for the story you're reading, then In progress, Up next and Recently added." width="390" height="844" loading="lazy" decoding="async"><figcaption>The Tonight screen: a Continue card for the story you're reading, then In progress, Up next and Recently added.</figcaption></figure>
+<p><strong>Tonight</strong> is where the app opens. The big <strong>Continue</strong> card is the story
+you read last: <strong>Resume</strong> opens it where you left off, and <strong>Listen</strong> opens
+it and starts reading aloud (in Safari, Listen opens the audio controls and
+you tap Play).</p>
+<p>Below it:</p>
+<ul>
+<li><strong>In progress</strong> — other stories you've started.</li>
+<li><strong>New chapters</strong> — stories with new chapters waiting (see
+<a href="#checking-for-new-chapters">Checking for new chapters</a>).</li>
+<li><strong>Up next</strong> — the next part of a series you're working through.</li>
+<li><strong>Recently added</strong> — your newest imports.</li>
+</ul>
+<p>Tap a story's name to see its page; tap its button to jump straight into
+reading.</p>
+<h3 id="the-library-tab"><a class="anchor" href="#the-library-tab" aria-hidden="true" tabindex="-1">#</a>The Library tab</h3>
+<figure><img src="images/library.png" alt="The Library tab: search box, quick filter chips, and story rows with progress, badges and a series card." width="390" height="844" loading="lazy" decoding="async"><figcaption>The Library tab: search box, quick filter chips, and story rows with progress, badges and a series card.</figcaption></figure>
+<p>The <strong>Library</strong> tab lists everything you've added.</p>
+<ul>
+<li><strong>Search box</strong> — type part of a title, author, or tag.</li>
+<li><strong>Quick filters</strong> (the row of chips) — <strong>All</strong>, <strong>Reading</strong> (started but
+not finished), <strong>New chapters</strong>, <strong>Series</strong>, <strong>Complete</strong> (you've read it
+all). If your stories come from more than one site, there's a chip per
+site too, plus <strong>📁 Uploaded</strong> for files you added yourself.</li>
+<li><strong>Each row</strong> shows the title, author, length, summary and tags, plus a
+progress bar along the bottom edge and your percentage read. <strong>✓ Offline</strong>
+means the story is saved on this phone. A badge like <strong>+2 NEW</strong> means new
+chapters are waiting; <strong>Incomplete · 4/28</strong> means only part of it has been
+downloaded so far (see <a href="#incomplete-stories">Incomplete stories</a>).</li>
+<li><strong>Tap the author's name</strong> to show only that author's stories.</li>
+<li><strong>Series</strong> are grouped into a single card (&quot;Series · 3 parts · 1 of 3
+parts read&quot;). Its button opens the part you're up to; tap the card to see
+every part.</li>
+<li><strong>Tap a row</strong> to open the story's page. <strong>Tap its button</strong> (<strong>Read</strong>,
+<strong>Resume</strong> or <strong>Import</strong>) to go straight to reading.</li>
+</ul>
+<p>The <strong>Search</strong> tab does the same kind of search across your whole library
+(titles, authors, tags and series names) and shows results as you type.</p>
+<h3 id="sorting-and-filters"><a class="anchor" href="#sorting-and-filters" aria-hidden="true" tabindex="-1">#</a>Sorting and filters</h3>
+<figure><img src="images/library-filters.png" alt="The Filters sheet: Sort, Status, and the Check for Updates button." width="390" height="844" loading="lazy" decoding="async"><figcaption>The Filters sheet: Sort, Status, and the Check for Updates button.</figcaption></figure>
+<p>Tap the <strong>filter button</strong> next to the search box (or the &quot;6 stories · Sort:
+…&quot; line under the chips) to open <strong>Filters</strong>:</p>
+<ul>
+<li><strong>Sort</strong> — Date Added, Last Read, Title, Author, Last Updated, Word Count
+or Progress. The arrow button flips the order.</li>
+<li><strong>Status</strong> — whether the <em>author</em> has finished the story (Completed / In
+Progress). This is different from the <strong>Complete</strong> chip, which is about
+whether <em>you've</em> finished reading it.</li>
+<li>The second menu shows stories by download state: <strong>Imported</strong>,
+<strong>Incomplete</strong>, or <strong>Not Yet Imported</strong>.</li>
+<li><strong>Format</strong> (only if you've added PDFs or comics) — Fiction, or Books &amp;
+manga.</li>
+</ul>
+<p>When any filter is on, a <strong>Clear filters</strong> button appears on the Library tab.</p>
+<h3 id="checking-for-new-chapters"><a class="anchor" href="#checking-for-new-chapters" aria-hidden="true" tabindex="-1">#</a>Checking for new chapters</h3>
+<p>Reader doesn't check for updates on its own. When you want to know if
+anything new has been posted:</p>
+<ol>
+<li>Open <strong>Filters</strong> and tap <strong>Check for Updates</strong>. Tick <strong>incl. completed</strong>
+first if you also want to re-check stories the author has marked
+finished.</li>
+<li>A progress line appears above your stories (&quot;… 3 new chapters so far&quot;).
+You can keep reading while it runs.</li>
+<li>Stories with new chapters get a <strong>+N NEW</strong> badge and appear under <strong>New
+chapters</strong> on Tonight. The badge clears when you open the story to read.</li>
+</ol>
+<p>To update just one story, open its page and tap <strong>Re-fetch</strong>. The button
+turns amber when the site has posted chapters since your last fetch.</p>
+<p>When a story has new chapters, Reader usually downloads just the new ones.
+So if an author also rewrote or reordered earlier chapters, tap <strong>Re-fetch</strong>
+once more after the chapter count matches the site — that pass re-checks
+every chapter.</p>
+<p>Stories you added from a file are never checked; there's no site to check.</p>
+<h3 id="adding-stories"><a class="anchor" href="#adding-stories" aria-hidden="true" tabindex="-1">#</a>Adding stories</h3>
+<figure><img src="images/import-sheet.png" alt="The Import sheet: paste a link, or upload a file." width="390" height="844" loading="lazy" decoding="async"><figcaption>The Import sheet: paste a link, or upload a file.</figcaption></figure>
+<p>Tap <strong>Import</strong> in the tab bar.</p>
+<p><strong>From a website:</strong> paste the story's address into the box and tap
+<strong>Import</strong>. Supported sites are AO3, FanFiction.Net, SpaceBattles,
+Sufficient Velocity and Questionable Questing. You can close the sheet and
+keep reading — a small progress pill floats above the tab bar; tap it to
+reopen the sheet. A single story imported this way is also saved for offline
+reading on that phone when it finishes.</p>
+<p>You can also paste:</p>
+<ul>
+<li><strong>An AO3 series link</strong> — you get the list of works with checkboxes; pick
+the ones you want (<strong>Select All New</strong> skips ones you already have) and tap
+<strong>Import N Works</strong>.</li>
+<li><strong>Your AO3 bookmarks page</strong> or <strong>a FanFiction.Net profile</strong> (then choose
+<strong>Favorites</strong>, <strong>Follows</strong> or <strong>Both</strong>) — every story on the list is added
+to your library as <strong>Not imported</strong>: just its title and details, ready for
+later. Tap <strong>Import</strong> on one when you want to read it. Scanning AO3
+bookmarks is slow on purpose (AO3 allows about one request a second).</li>
+</ul>
+<p><strong>From a file:</strong></p>
+<ul>
+<li><strong>Upload EPUB</strong> — ebooks (for example from Project Gutenberg).</li>
+<li><strong>Upload Book (PDF/CBZ)</strong> — PDFs and comics/manga, shown page by page
+(see <a href="#books-and-manga">Books and manga</a>).</li>
+<li><strong>Upload Markdown</strong> — <code>.md</code> or <code>.txt</code> files, e.g. your own writing. You
+choose whether it starts a new work or adds chapters to one you uploaded
+before.</li>
+<li><strong>Upload Doc (DOCX/ODT)</strong> — Word or Google Docs exports, either a finished
+work or one chapter of an ongoing one.</li>
+</ul>
+<p><strong>In progress:</strong> while anything is downloading — including fetches started
+from a story's page, from the share sheet, or on another device — the top of
+the Import sheet lists it with a live chapter count (&quot;Chapter 35 of 72&quot;).
+Check here before tapping a button a second time.</p>
+<p><strong>If an import fails</strong>, it's listed at the top of the Library with
+<strong>Retry</strong> and <strong>Dismiss</strong> buttons. If a site is blocking downloads for a
+while, the Import button shows a countdown (&quot;Cooldown 12:30&quot;) and becomes
+available again when it reaches zero.</p>
+<h3 id="incomplete-stories"><a class="anchor" href="#incomplete-stories" aria-hidden="true" tabindex="-1">#</a>Incomplete stories</h3>
+<figure><img src="images/story-incomplete.png" alt="A story page showing the &quot;Incomplete · 4/28&quot; badge and the Fetch the rest button." width="390" height="844" loading="lazy" decoding="async"><figcaption>A story page showing the &quot;Incomplete · 4/28&quot; badge and the Fetch the rest button.</figcaption></figure>
+<p>Some sites — FanFiction.Net especially — cut a long download off partway.
+Instead of throwing away what it got, Reader keeps it and marks the story
+<strong>Incomplete · 4/28</strong> (4 of 28 chapters so far). You can start reading those
+chapters right away.</p>
+<p>To get the rest:</p>
+<ol>
+<li>Wait about <strong>30 minutes</strong> (the site needs a break).</li>
+<li>Open the story's page and tap <strong>Fetch the rest</strong>. Only the missing
+chapters are downloaded; you can watch it under <strong>In progress</strong> in the
+Import sheet.</li>
+<li>Very long stories may need a few rounds. If you tap too soon, you'll see
+a message saying how many minutes to wait.</li>
+</ol>
+<p>When every chapter has arrived, the badge disappears.</p>
+<h3 id="the-story-page"><a class="anchor" href="#the-story-page" aria-hidden="true" tabindex="-1">#</a>The story page</h3>
+<figure><img src="images/story-page.png" alt="A story page with Resume, Listen and Save Offline buttons, and the Marks list of bookmarks and highlights." width="390" height="844" loading="lazy" decoding="async"><figcaption>A story page with Resume, Listen and Save Offline buttons, and the Marks list of bookmarks and highlights.</figcaption></figure>
+<p>Tap any story's title to open its page: reading progress, the full summary,
+all tags, and dates.</p>
+<ul>
+<li><strong>Resume</strong> / <strong>Read</strong> — open it in the reader.</li>
+<li><strong>Listen</strong> — open it and start reading aloud.</li>
+<li><strong>Save Offline</strong> — download every chapter to this phone (it changes to
+<strong>Cached</strong> when done).</li>
+<li><strong>Re-fetch</strong> — check the site for changes to this story (not shown for
+uploaded files). On an incomplete story this button is <strong>Fetch the rest</strong>.</li>
+<li><strong>Part 2 of …</strong> (only for stories in a series) — opens the series page.</li>
+<li><strong>More</strong> — less common actions: <strong>Clear Progress</strong>, <strong>Delete</strong>, and for
+uploaded files <strong>Rename</strong> and <strong>Mark Complete</strong>.</li>
+</ul>
+<p><strong>Marks</strong> lists everything you've marked in the story: the 🎧 and ⏹
+listening markers, your bookmarks (with their notes) and your highlights.
+Tap one to open the reader right at that spot. That spot becomes your new
+reading position.</p>
+<h3 id="series"><a class="anchor" href="#series" aria-hidden="true" tabindex="-1">#</a>Series</h3>
+<figure><img src="images/series-page.png" alt="A series page: each part in reading order, marked read, in progress, or unread." width="390" height="844" loading="lazy" decoding="async"><figcaption>A series page: each part in reading order, marked read, in progress, or unread.</figcaption></figure>
+<p>A series page lists every part in reading order with what you've read, and
+a <strong>Read</strong> / <strong>Resume</strong> button for each. Tap a part's title to see its own
+page.</p>
+<h3 id="themes"><a class="anchor" href="#themes" aria-hidden="true" tabindex="-1">#</a>Themes</h3>
+<p>Reader comes in seven themes — <strong>System</strong> (follows your phone's light/dark
+setting), <strong>Dark</strong>, <strong>Light</strong>, <strong>Sepia</strong>, <strong>Night (AMOLED)</strong>, <strong>Solarized
+Light</strong> and <strong>Solarized Dark</strong> — and you can build your own (see
+<a href="#themes-and-your-own-colours">Themes and your own colours</a>). Tap <strong>Theme</strong>
+at the top of the Library tab, or the theme button in the reader. Your
+choice applies everywhere in the app.</p>
+<h2 id="reading"><a class="anchor" href="#reading" aria-hidden="true" tabindex="-1">#</a>Reading</h2>
+<h3 id="showing-and-hiding-the-controls"><a class="anchor" href="#showing-and-hiding-the-controls" aria-hidden="true" tabindex="-1">#</a>Showing and hiding the controls</h3>
+<figure><img src="images/reader-bars.png" alt="The reader with its top and bottom bars showing." width="390" height="844" loading="lazy" decoding="async"><figcaption>The reader with its top and bottom bars showing.</figcaption></figure>
+<p>The reader opens full screen with just the text. <strong>Tap the page once</strong> to
+show the bars; tap again, scroll, or wait about five seconds and they hide.</p>
+<p>The <strong>top bar</strong>, left to right: back to the library, the story title (tap it
+to see a long title in full), and the <strong>theme button</strong>. Below that: the
+<strong>chapter menu</strong> (&quot;Ch. 1/3&quot;), the <strong>bookmark button</strong>, the <strong>bookmarks
+list</strong> (with a count), <strong>find in story</strong> (magnifying glass), your paragraph
+number (&quot;15 / 50&quot;), <strong>Aa</strong> for text settings, and the <strong>control size</strong>
+button.</p>
+<p>The <strong>bottom bar</strong> has a slider to jump anywhere in the story, previous and
+next chapter buttons, and the <strong>speaker button</strong> that opens the listening
+controls.</p>
+<h3 id="moving-around"><a class="anchor" href="#moving-around" aria-hidden="true" tabindex="-1">#</a>Moving around</h3>
+<ul>
+<li><strong>Scroll</strong> to read — the whole story is one long page.</li>
+<li><strong>Chapter menu</strong> — tap &quot;Ch. 1/3&quot; and pick a chapter.</li>
+<li><strong>Previous / next chapter</strong> — the arrow buttons at the ends of the bottom
+bar.</li>
+<li><strong>Slider</strong> — drag it and let go to jump to that point.</li>
+<li><strong>Find in story</strong> — tap the magnifying glass, type, and step through
+matches with the arrows.</li>
+</ul>
+<h3 id="text-settings-aa"><a class="anchor" href="#text-settings-aa" aria-hidden="true" tabindex="-1">#</a>Text settings (Aa)</h3>
+<figure><img src="images/reader-text-settings.png" alt="The Aa panel: font, size, line height, width, alignment, paragraph highlight, theme swatches." width="390" height="844" loading="lazy" decoding="async"><figcaption>The Aa panel: font, size, line height, width, alignment, paragraph highlight, theme swatches.</figcaption></figure>
+<p>Tap <strong>Aa</strong> to change:</p>
+<ul>
+<li><strong>Font</strong> — including <strong>OpenDyslexic</strong>.</li>
+<li><strong>Size</strong> — the A↓ / A↑ buttons.</li>
+<li><strong>Line height</strong> — the slider.</li>
+<li><strong>Width</strong> — Narrow, Medium, Wide or Full (mostly matters on bigger
+screens).</li>
+<li><strong>Alignment</strong> — Justified or Left.</li>
+<li><strong>Highlight</strong> — whether the current paragraph is highlighted <strong>Always</strong>
+or only <strong>While listening</strong>.</li>
+<li><strong>Theme</strong> — tap a swatch to switch preset themes quickly.</li>
+<li><strong>Reset to defaults</strong> puts all of the above back.</li>
+</ul>
+<p>Your text settings are saved to your account, so a new phone picks them up
+after you sign in.</p>
+<h3 id="themes-and-your-own-colours"><a class="anchor" href="#themes-and-your-own-colours" aria-hidden="true" tabindex="-1">#</a>Themes and your own colours</h3>
+<figure><img src="images/reader-theme-editor.png" alt="The theme picker's editor for a new custom theme." width="390" height="844" loading="lazy" decoding="async"><figcaption>The theme picker's editor for a new custom theme.</figcaption></figure>
+<p>Tap the <strong>theme button</strong> (top right in the reader) to see all themes. To
+make your own:</p>
+<ol>
+<li>Tap <strong>+ New custom theme</strong>, name it, and pick colours for <strong>Background</strong>,
+<strong>Text</strong>, <strong>Link</strong> and <strong>Highlight</strong>. Choose <strong>Fill</strong> or <strong>Marker</strong> for
+how highlights look, and tick <strong>Dark theme</strong> if your background is dark.</li>
+<li>The page changes colour as you tweak, so you can see the result.</li>
+<li>Tap <strong>Save</strong>.</li>
+</ol>
+<p>To change a theme you made, tap its pencil icon. Edits apply <strong>and save as
+you go</strong> — there's no Save button for edits:</p>
+<ul>
+<li><strong>Done</strong> closes the editor and keeps your changes.</li>
+<li><strong>Cancel</strong> puts everything back the way it was when you opened the
+editor, even changes that were already saved.</li>
+<li>Closing any other way (tapping outside, or the ✕) keeps your changes.</li>
+</ul>
+<p>Your custom themes are saved to your account and come back on a new device.
+You can also <strong>Export</strong> a theme as a file to share it, and <strong>Import</strong> one
+someone shares with you.</p>
+<h3 id="control-size-and-landscape"><a class="anchor" href="#control-size-and-landscape" aria-hidden="true" tabindex="-1">#</a>Control size and landscape</h3>
+<p>The <strong>control size</strong> button (next to <strong>Aa</strong>) switches the reader's buttons
+between <strong>Compact</strong> and <strong>Comfy</strong>. Comfy makes every control bigger and
+easier to hit — handy in the car.</p>
+<p>Turn your phone sideways and the bars shrink to a single slim row so more
+text fits. In the iPhone app, the top bar also has a <strong>rotation lock</strong>
+button so the page stays put when you lie down.</p>
+<h3 id="your-place"><a class="anchor" href="#your-place" aria-hidden="true" tabindex="-1">#</a>Your place</h3>
+<p>Reader remembers where you are in every story and opens there next time — on
+this phone and on any other device where you sign in. Just close the app;
+there's nothing to save.</p>
+<p>When you reach the very end of a story, a <strong>Done</strong> button appears in the top
+bar. It removes the offline copy from this phone to free up space; the story
+stays in your library.</p>
+<h3 id="bookmarks"><a class="anchor" href="#bookmarks" aria-hidden="true" tabindex="-1">#</a>Bookmarks</h3>
+<p>Tap the <strong>bookmark button</strong> in the top bar to bookmark the paragraph you're
+on; it fills in. Tap it again to remove the bookmark (an <strong>Undo</strong> appears for
+a few seconds).</p>
+<p>Tap the <strong>bookmarks list</strong> button (the one with a number) to see them all.
+Tap a bookmark to jump to it; use the pencil to add or edit a note, and the
+bin to delete it.</p>
+<h3 id="highlights-and-notes"><a class="anchor" href="#highlights-and-notes" aria-hidden="true" tabindex="-1">#</a>Highlights and notes</h3>
+<figure><img src="images/reader-highlight.png" alt="Selecting a passage brings up the highlight colours." width="390" height="844" loading="lazy" decoding="async"><figcaption>Selecting a passage brings up the highlight colours.</figcaption></figure>
+<ol>
+<li>Press and hold on a word, then drag the handles to cover the passage you
+want.</li>
+<li>Tap one of the four colours (yellow, green, blue, pink) that appear under
+it. To add a note at the same time, tap the pencil first, type, then pick
+a colour.</li>
+</ol>
+<p>Tap a highlight later to change its colour, edit its note, or delete it. The
+<strong>Highlights</strong> tab in the bookmarks list shows them all and can copy or
+download them as a text file (Markdown).</p>
+<p><strong>Look up a word:</strong> press and hold a single word to see its definition. This
+needs an internet connection.</p>
+<h3 id="books-and-manga"><a class="anchor" href="#books-and-manga" aria-hidden="true" tabindex="-1">#</a>Books and manga</h3>
+<p>PDFs and comics (CBZ) open in a page-by-page reader instead:</p>
+<ul>
+<li>Switch between <strong>vertical scrolling</strong> and <strong>one page at a time</strong>.</li>
+<li>In one-page mode, swipe or tap the sides to turn pages, and pinch or
+double-tap to zoom. Comics read <strong>right to left</strong> by default; there's a
+button to change the direction.</li>
+<li>Tap the play button to hear the page read aloud. If a scanned PDF has no
+text to read, open its page, tap <strong>More → Recognize Text</strong>, and wait —
+after that, read-aloud and search work.</li>
+</ul>
+<h2 id="listening"><a class="anchor" href="#listening" aria-hidden="true" tabindex="-1">#</a>Listening</h2>
+<p>Reader can read any story out loud while you drive, cook, or fall asleep.</p>
+<h3 id="start-listening"><a class="anchor" href="#start-listening" aria-hidden="true" tabindex="-1">#</a>Start listening</h3>
+<p>Any of these starts narration:</p>
+<ul>
+<li><strong>Listen</strong> on Tonight or on a story's page.</li>
+<li>In the reader, tap the <strong>speaker button</strong> in the bottom bar, then
+<strong>Play</strong>.</li>
+<li><strong>Double-tap any paragraph</strong> to start reading from there.</li>
+</ul>
+<p>The paragraph being read is highlighted and the page follows along.</p>
+<h3 id="the-listening-controls"><a class="anchor" href="#the-listening-controls" aria-hidden="true" tabindex="-1">#</a>The listening controls</h3>
+<figure><img src="images/listen-dock.png" alt="The listening controls: slider, speed and sleep chips, transport buttons, and audio settings." width="390" height="844" loading="lazy" decoding="async"><figcaption>The listening controls: slider, speed and sleep chips, transport buttons, and audio settings.</figcaption></figure>
+<ul>
+<li><strong>Top row</strong> — the position slider, your percentage, a <strong>speed chip</strong>
+(&quot;1×&quot;: tap to cycle 1× → 1.5× → 2× → 0.7×) and a <strong>sleep chip</strong> (&quot;off&quot;:
+tap to cycle 15, 30, 45, 60 minutes and off). The small arrow at the end
+folds the settings away and back.</li>
+<li><strong>Buttons</strong> — previous chapter, hide the controls (audio keeps playing),
+previous paragraph, <strong>Play/Pause</strong>, <strong>Stop</strong>, next paragraph, next
+chapter.</li>
+<li><strong>Speed</strong> — the slider or the <strong>Slow / 1x / 1.5x / 2x</strong> buttons.</li>
+<li><strong>Voice</strong> — pick from the voices on your phone.</li>
+<li><strong>Auto</strong> — keep going paragraph after paragraph (untick it to hear one
+paragraph at a time).</li>
+<li><strong>Pronounce</strong> — teach the voice how to say names it gets wrong: type the
+word and what it <strong>sounds like</strong> (e.g. &quot;Jaime&quot; → &quot;Jay-mee&quot;). Entries can
+apply to every story (<strong>Global</strong>) or just <strong>This story</strong>.</li>
+<li><strong>Sleep</strong> — the timer (below).</li>
+<li><strong>Diag</strong> and <strong>Copy</strong> — for troubleshooting (see
+<a href="#something-went-wrong-with-listening">Something went wrong with listening</a>).</li>
+</ul>
+<p>Speed and voice are remembered on each device separately.</p>
+<h3 id="sleep-timer"><a class="anchor" href="#sleep-timer" aria-hidden="true" tabindex="-1">#</a>Sleep timer</h3>
+<p>Tap a time in the <strong>Sleep</strong> row (<strong>15m</strong>, <strong>30m</strong>, <strong>45m</strong>, <strong>60m</strong>), or type
+your own number of minutes and tap <strong>Set</strong>. Narration stops when it runs out.
+The timer only counts down while the story is actually being read — pause
+for dinner and your minutes wait for you. <strong>Cancel</strong> stops the timer.</p>
+<p><strong>Auto 🌙</strong> (on by default) sets the timer for you at night: if you start
+listening between 10 pm and 5 am — or you're still listening when 10 pm comes
+around — it starts a timer using the length you picked last time (45 minutes
+if you've never set one). A message pops up with a <strong>Cancel</strong> button in case
+you want to keep going. Tap <strong>Auto 🌙</strong> to turn this off.</p>
+<h3 id="lock-screen-carplay-and-headphones"><a class="anchor" href="#lock-screen-carplay-and-headphones" aria-hidden="true" tabindex="-1">#</a>Lock screen, CarPlay and headphones</h3>
+<p>In the iPhone app, narration keeps playing with the screen locked. The lock
+screen and Control Center show the story's title with play/pause, and the
+skip buttons move back or forward one paragraph. Audio goes wherever your
+phone's audio goes — AirPods, Bluetooth speakers, or your car. In the car,
+play/pause and skip work from CarPlay or the steering wheel; start the story
+on your phone (Reader has no icon on the CarPlay screen).</p>
+<h3 id="the--and--markers"><a class="anchor" href="#the--and--markers" aria-hidden="true" tabindex="-1">#</a>The 🎧 and ⏹ markers</h3>
+<p>Every time you start listening, Reader drops a <strong>🎧 Listening started here</strong>
+marker where you were. When narration stops, it moves a <strong>⏹ Listening
+stopped here</strong> marker to where the voice got to. If you fell asleep, the 🎧
+marker takes you back to the last part you actually heard awake.</p>
+<p>You'll find both at the top of the bookmarks list and under <strong>Marks</strong> on the
+story's page. There's only ever one of each per story; you can delete them
+like any bookmark. (If you ever see two of the same, delete the extra one and
+mention it to the person who invited you.)</p>
+<h2 id="on-the-go"><a class="anchor" href="#on-the-go" aria-hidden="true" tabindex="-1">#</a>On the go</h2>
+<h3 id="reading-without-a-signal"><a class="anchor" href="#reading-without-a-signal" aria-hidden="true" tabindex="-1">#</a>Reading without a signal</h3>
+<p>Stories marked <strong>✓ Offline</strong> in your library are saved on your phone and
+open without any connection — on a plane, underground, or with Tailscale
+switched off.</p>
+<ul>
+<li>A single story you import from the <strong>Import</strong> sheet is saved automatically
+on that phone when the import finishes.</li>
+<li>For anything else — series, stories added from a list, files, or stories
+imported on another device — open the story's page and tap <strong>Save
+Offline</strong>.</li>
+</ul>
+<p>Without a connection the Library shows a notice at the top and still lists
+your stories, but only the saved ones will open. Tonight needs a connection.
+Your reading position is saved on the phone as you go and syncs again once
+you're connected.</p>
+<h3 id="sharing-to-reader-from-other-apps"><a class="anchor" href="#sharing-to-reader-from-other-apps" aria-hidden="true" tabindex="-1">#</a>Sharing to Reader from other apps</h3>
+<p>In the iPhone app, you can send things to Reader from Safari, Files, Mail
+and most other apps:</p>
+<ol>
+<li>Tap the app's <strong>Share</strong> button and choose <strong>paperhurts</strong> (if it isn't in
+the row of apps, scroll to the end of the row, tap <strong>More</strong>, and pick it
+there).</li>
+<li>A small panel says <strong>✓ Saved to paperhurts</strong> and closes by itself.</li>
+<li>The next time you open Reader, it imports what you shared.</li>
+</ol>
+<p>You can share:</p>
+<ul>
+<li><strong>A story link</strong> from any supported site.</li>
+<li><strong>Documents</strong> — Word (DOCX), OpenDocument (ODT), EPUB, Markdown and plain
+text files.</li>
+</ul>
+<p><strong>PDFs and comics can't be shared this way</strong> — they can be very large. Add
+them with <strong>Import → Upload Book (PDF/CBZ)</strong> inside the app instead.</p>
+<h3 id="api-tokens-safari-only"><a class="anchor" href="#api-tokens-safari-only" aria-hidden="true" tabindex="-1">#</a>API tokens (Safari only)</h3>
+<p>The <strong>API Tokens</strong> button at the top of the Library is only for people who
+use Reader in Safari and want an iPhone Shortcut to send links to it. (The
+iPhone app's share button doesn't need one.) A token can only import stories,
+but treat it like a password. Ask the person who invited you for the
+Shortcut.</p>
+<h2 id="troubleshooting"><a class="anchor" href="#troubleshooting" aria-hidden="true" tabindex="-1">#</a>Troubleshooting</h2>
+<h3 id="couldnt-reach-your-library"><a class="anchor" href="#couldnt-reach-your-library" aria-hidden="true" tabindex="-1">#</a>&quot;Couldn't reach your library&quot;</h3>
+<p>Reader can't talk to the server. Almost always:</p>
+<ul>
+<li><strong>Tailscale is off.</strong> Open the Tailscale app, switch it on, then go back
+to Reader and open the Library tab again.</li>
+<li><strong>No signal.</strong> Your saved (<strong>✓ Offline</strong>) stories still work.</li>
+</ul>
+<p>If both are fine and it still can't connect, the server may be down — let
+the person who invited you know.</p>
+<h3 id="the-screen-dims-but-doesnt-turn-off"><a class="anchor" href="#the-screen-dims-but-doesnt-turn-off" aria-hidden="true" tabindex="-1">#</a>The screen dims but doesn't turn off</h3>
+<p>That's the iPhone's <strong>Always-On Display</strong> (iPhone 14 Pro and later), not
+Reader: when the phone locks, the screen dims instead of going black. To get
+a fully black screen, turn on <strong>Low Power Mode</strong> (which turns Always-On off)
+or switch off <strong>Settings → Display &amp; Brightness → Always On Display</strong>.</p>
+<p>If the screen dims while you're using it, even at full brightness, the phone
+is probably warm — iPhones lower brightness when they heat up.</p>
+<h3 id="the-voices-are-different-on-my-other-device"><a class="anchor" href="#the-voices-are-different-on-my-other-device" aria-hidden="true" tabindex="-1">#</a>The voices are different on my other device</h3>
+<p>Voices come from each device, not from Reader, so every phone, tablet and
+browser has its own list — and the app and Safari can differ. For nicer
+voices on iPhone, go to <strong>Settings → Accessibility → Spoken Content → Voices
+→ English</strong> and download an <strong>Enhanced</strong> or <strong>Premium</strong> voice, then choose it
+in Reader's voice menu.</p>
+<h3 id="an-import-stopped-partway"><a class="anchor" href="#an-import-stopped-partway" aria-hidden="true" tabindex="-1">#</a>An import stopped partway</h3>
+<p>That's normal for very long stories on some sites. The story is kept as
+<strong>Incomplete</strong> — see <a href="#incomplete-stories">Incomplete stories</a>. Wait about
+half an hour, then tap <strong>Fetch the rest</strong>.</p>
+<p>If a fetch seems stuck, open <strong>Import</strong> and look under <strong>In progress</strong> before
+tapping anything again; a second tap while one is running just tells you it's
+already being fetched.</p>
+<h3 id="something-went-wrong-with-listening"><a class="anchor" href="#something-went-wrong-with-listening" aria-hidden="true" tabindex="-1">#</a>Something went wrong with listening</h3>
+<p>If narration stops, skips, or misbehaves, send the person who invited you a
+diagnostics file:</p>
+<ol>
+<li>Open the story, tap the <strong>speaker button</strong>, and make sure the settings are
+showing.</li>
+<li>Tap <strong>Diag</strong> (bottom right). In the iPhone app, the share sheet opens with
+a small file — send it by Messages or Mail. <strong>Copy</strong> puts the same
+information on the clipboard instead, to paste into a message.</li>
+</ol>
+<p>The file records what the voice and the app were doing — play, pause, skips,
+which voice, how long things took to load, whether the phone was warm — not
+the text of your stories.</p>
+<p>In the iPhone app there's also a <strong>Route</strong> button next to Diag. Leave it on
+<strong>App</strong> unless the person who invited you asks you to try another setting
+(for example if narration sounds choppy over CarPlay).</p>
+<p>When the app itself hits an error, it quietly sends a short technical report
+to the server so it can be fixed. The report never includes what you're
+reading.</p>
+
+  </main>
+  <footer>
+    <p><a href="../">paperhurts</a> &middot; <a href="#">back to top</a></p>
+  </footer>
+</div>
+</body>
+</html>
