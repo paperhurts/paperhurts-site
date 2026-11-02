@@ -44,7 +44,7 @@
   }
   .ambient {
     position: fixed; top: -30%; left: 50%; transform: translateX(-50%);
-    width: 120vw; height: 60vh;
+    width: 100%; height: 60vh;
     background: radial-gradient(ellipse, rgba(196, 149, 106, 0.04) 0%, transparent 70%);
     pointer-events: none; z-index: 0;
   }
@@ -193,19 +193,43 @@
     color: var(--text-dim);
     line-height: 1.5;
   }
-  footer {
-    margin-top: 4rem;
-    padding-top: 1.5rem;
-    border-top: 1px solid var(--rule);
+  .to-top {
+    margin: 4rem 0 0;
     text-align: center;
     font-family: 'JetBrains Mono', monospace;
     font-size: 0.62rem;
     letter-spacing: 0.2em;
-    color: var(--text-faint);
     text-transform: uppercase;
   }
-  footer a { color: var(--text-dim); text-decoration: none; }
-  footer a:hover { color: var(--accent-glow); }
+  .to-top a { color: var(--text-dim); text-decoration: none; }
+  .to-top a:hover { color: var(--accent-glow); }
+  /* The site footer, as on the site's other pages */
+  .site-footer {
+    position: relative; z-index: 1;
+    max-width: 700px;
+    margin: 0 auto;
+    padding: 2rem 1.25rem 3rem;
+    border-top: 1px solid var(--rule);
+    text-align: center;
+  }
+  .site-footer nav {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 0.4rem 1.2rem;
+    margin-bottom: 1.25rem;
+  }
+  .site-footer nav a {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.7rem;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    text-decoration: none;
+    color: var(--text-dim);
+    padding: 0.3rem 0;
+  }
+  .site-footer nav a:hover, .site-footer nav a[aria-current="page"] { color: var(--accent-glow); }
+  .site-footer p { font-size: 1rem; color: var(--text-dim); margin-bottom: 0.4rem; }
   @media (max-width: 580px) {
     body { font-size: 1.12rem; }
     .wrap { padding: 1.75rem 16px 3rem; }
@@ -271,14 +295,23 @@ saved for offline reading.</li>
 <ol>
 <li>Open <strong>paperhurts</strong> (with Tailscale on).</li>
 <li>Tap <strong>Register</strong> under the sign-in form.</li>
-<li>Fill in your email, a username, and a password (twice), then type the
-<strong>invite code</strong> the person who invited you gave you. Tap <strong>Register</strong>.</li>
+<li>Fill in your email, a username, and a password of at least 12 characters
+(twice; a short phrase of a few words is easy to remember and works
+well), then type the <strong>invite code</strong> the person who invited you gave
+you. Tap <strong>Register</strong>.</li>
 </ol>
 <p>You land on the <strong>Tonight</strong> screen, signed in. If the app ever asks you to
 sign in again, use the same email and password. (<strong>Logout</strong> is at the top of
 the <strong>Library</strong> tab, next to a <strong>User guide</strong> button that opens this guide.)</p>
 <p>Your library belongs to your account: other people who use the same server
 can't see your stories, bookmarks, or notes.</p>
+<h3 id="changing-your-password"><a class="anchor" href="#changing-your-password" aria-hidden="true" tabindex="-1">#</a>Changing your password</h3>
+<p>Tap <strong>Account</strong> at the top of the <strong>Library</strong> tab. Type your current
+password, then the new one twice (at least 12 characters), and tap <strong>Change
+password</strong>. Your other devices stay signed in. If you made an
+<a href="#api-tokens-safari-only">API token</a> for a Shortcut, it keeps working too.</p>
+<p>If your account is older than the 12-character rule, your old password
+still works until you change it.</p>
 <h3 id="prefer-safari"><a class="anchor" href="#prefer-safari" aria-hidden="true" tabindex="-1">#</a>Prefer Safari?</h3>
 <p>You can also use Reader in Safari instead of the app. With Tailscale on,
 open the web address the person who invited you gives you, sign in, then tap
@@ -386,14 +419,36 @@ bookmarks is slow on purpose (AO3 allows about one request a second).</li>
 </ul>
 <p><strong>From a file:</strong></p>
 <ul>
-<li><strong>Upload EPUB</strong> — ebooks (for example from Project Gutenberg).</li>
-<li><strong>Upload Book (PDF/CBZ)</strong> — PDFs and comics/manga, shown page by page
-(see <a href="#books-and-manga">Books and manga</a>).</li>
-<li><strong>Upload Markdown</strong> — <code>.md</code> or <code>.txt</code> files, e.g. your own writing. You
+<li>
+<p><strong>Upload EPUBs</strong> — ebooks, as many as you like at once (on a computer
+you can also drag them onto the Import sheet). Each file gets a line
+saying what happened to it, and you can keep reading while they import.
+Downloads from AO3's own <strong>Download → EPUB</strong>, from FicHub and from
+FanFicFare are recognised as the story they are: importing a newer
+download of a story you already have <strong>updates that story</strong> (new chapters
+added, your place kept) instead of adding a second copy, and that works
+for a story you first added by its link too. A download never removes
+chapters you already have.</p>
+</li>
+<li>
+<p><strong>Upload Book (PDF/CBZ)</strong> — PDFs and comics/manga, shown page by page
+(see <a href="#books-and-manga">Books and manga</a>).</p>
+</li>
+<li>
+<p><strong>Upload Markdown</strong> — <code>.md</code> or <code>.txt</code> files, e.g. your own writing. You
 choose whether it starts a new work or adds chapters to one you uploaded
-before.</li>
-<li><strong>Upload Doc (DOCX/ODT)</strong> — Word or Google Docs exports, either a finished
-work or one chapter of an ongoing one.</li>
+before. A chapter file titled like one of your works (its <code>#</code> heading or
+a <code>title:</code> line) is set to go into that work automatically, and the confirm
+screen says so. If the file starts with a <code>story:</code> line and a <code>#</code> heading
+that repeats the work's name, the chapter is named by its own heading
+underneath (for example &quot;Chapter Ten — Radio Silence&quot;). Pick <strong>New work</strong>
+if it's a separate story. A <code>story:</code>
+line at the top of the file names the work explicitly.</p>
+</li>
+<li>
+<p><strong>Upload Doc (DOCX/ODT)</strong> — Word or Google Docs exports, either a finished
+work or one chapter of an ongoing one.</p>
+</li>
 </ul>
 <p><strong>In progress:</strong> while anything is downloading — including fetches started
 from a story's page, from the share sheet, or on another device — the top of
@@ -431,13 +486,28 @@ all tags, and dates.</p>
 <li><strong>Re-fetch</strong> — check the site for changes to this story (not shown for
 uploaded files). On an incomplete story this button is <strong>Fetch the rest</strong>.</li>
 <li><strong>Part 2 of …</strong> (only for stories in a series) — opens the series page.</li>
-<li><strong>More</strong> — less common actions: <strong>Send a copy</strong>, <strong>Clear Progress</strong>,
-<strong>Delete</strong>, and for uploaded files <strong>Rename</strong> and <strong>Mark Complete</strong>.</li>
+<li><strong>More</strong> — less common actions: <strong>Export EPUB</strong>, <strong>Send a copy</strong>,
+<strong>Clear Progress</strong>, <strong>Delete</strong>, and for uploaded files <strong>Rename</strong> and
+<strong>Mark Complete</strong>.</li>
 </ul>
+<p><strong>Export EPUB</strong> saves the story as an EPUB file you can open in Books or
+any ebook app. In the iPhone app, tap <strong>Save EPUB…</strong> when it's ready and
+choose <strong>Save to Files</strong> or <strong>Books</strong>. Importing that file again later
+updates the same story instead of adding a copy.</p>
 <p><strong>Marks</strong> lists everything you've marked in the story: the 🎧 and ⏹
 listening markers, your bookmarks (with their notes) and your highlights.
 Tap one to open the reader right at that spot. That spot becomes your new
 reading position.</p>
+<h3 id="taking-your-whole-library-with-you"><a class="anchor" href="#taking-your-whole-library-with-you" aria-hidden="true" tabindex="-1">#</a>Taking your whole library with you</h3>
+<p>Tap <strong>Export</strong> at the top of the Library. Your stories are packed as EPUB
+files into zip files, in parts if your library is big (each part holds a
+few hundred stories at most). Tap <strong>Download</strong> for each part and keep the
+page open while it downloads. In the iPhone app, tap <strong>Save</strong> when a part
+is ready, then <strong>Save to Files</strong>.</p>
+<p>When a part finishes, the page says whether every story made it. If it
+says some ran out of time, tap <strong>Download again</strong>. Inside each zip,
+<code>export-report.txt</code> lists what's in it and anything left out. Books and
+manga (PDF/CBZ) and stories that aren't imported yet can't be exported.</p>
 <h3 id="sending-a-book-to-a-friend"><a class="anchor" href="#sending-a-book-to-a-friend" aria-hidden="true" tabindex="-1">#</a>Sending a book to a friend</h3>
 <p>To give someone on the same server their own copy of a book, open its story
 page and tap <strong>More → Send a copy</strong>, then type their <strong>username or email</strong>
@@ -449,8 +519,11 @@ until they open it.</p>
 with you, and they start from the beginning.</li>
 <li>An <strong>Incomplete</strong> story arrives incomplete; they can tap <strong>Fetch the rest</strong>
 on their copy.</li>
-<li>If they already have it, you'll see &quot;… already has this one&quot; and nothing
-changes for them.</li>
+<li>If they already have it, you'll still see <strong>Sent to …</strong> and nothing changes
+for them. The app deliberately doesn't tell you whether they had it: that
+would show you what's in someone else's library.</li>
+<li>Sending the same book to the same person again within 10 minutes doesn't
+send another copy.</li>
 <li>&quot;No one by that name or email.&quot; means the name didn't match, or that
 person has turned off receiving books. The app deliberately doesn't say
 which.</li>
@@ -566,8 +639,12 @@ a colour.</li>
 <p>Tap a highlight later to change its colour, edit its note, or delete it. The
 <strong>Highlights</strong> tab in the bookmarks list shows them all and can copy or
 download them as a text file (Markdown).</p>
-<p><strong>Look up a word:</strong> press and hold a single word to see its definition. This
-needs an internet connection.</p>
+<p><strong>Look up a word:</strong> press and hold a single word to see its definition. Words
+in other forms find their dictionary word (&quot;geese&quot; shows goose). The
+definitions come from Open English WordNet and are looked up by the
+Paperhurts server itself, so no outside service sees what you look up. This
+needs an internet connection. On iPhone, the menu's own <strong>Look Up</strong> also opens
+Apple's dictionary.</p>
 <h3 id="books-and-manga"><a class="anchor" href="#books-and-manga" aria-hidden="true" tabindex="-1">#</a>Books and manga</h3>
 <p>PDFs and comics (CBZ) open in a page-by-page reader instead:</p>
 <ul>
@@ -669,9 +746,55 @@ there).</li>
 <li><strong>A story link</strong> from any supported site.</li>
 <li><strong>Documents</strong> — Word (DOCX), OpenDocument (ODT), EPUB, Markdown and plain
 text files.</li>
+<li><strong>EPUBs, one per share.</strong> To add several, share them one after another;
+they import in order. An EPUB of a story you already have updates it.</li>
 </ul>
 <p><strong>PDFs and comics can't be shared this way</strong> — they can be very large. Add
 them with <strong>Import → Upload Book (PDF/CBZ)</strong> inside the app instead.</p>
+<p><strong>If your library is full</strong>, a shared file waits on the phone and imports
+the next time you open Reader after you've deleted some stories.</p>
+<p><strong>Sharing a lot at once:</strong> you can share about 30 chapter files every 10
+minutes. If you go past that, Reader says <strong>Upload limit reached: pausing
+about N min</strong>. Nothing is lost: the rest import on their own once the pause
+is over.</p>
+<p><strong>Sharing chapters of your own writing:</strong> start each chapter file with a
+short header, one line each, then a blank line, then the text:</p>
+<pre><code>Story: The Name of Your Story
+Chapter: 10
+Title: Chapter Ten — Radio Silence
+</code></pre>
+<ul>
+<li><code>Story:</code> says which work it belongs to, and <code>Title:</code> names the chapter.</li>
+<li><code>Chapter:</code> says where it goes. Use digits, like <code>10</code> (not <code>Ten</code>).</li>
+<li>If that chapter already exists, Reader asks: <strong>Insert</strong> it there (that
+chapter and the ones after it move down one), <strong>Replace</strong> it, <strong>Add</strong> it
+as a new chapter at the end, or <strong>Discard</strong> the file. Nothing changes
+until you choose.</li>
+<li>If chapters before it are missing (you shared chapter 12 before 11),
+it waits and goes in by itself once they arrive.</li>
+<li>If the header can't be read (a <code>#</code> in front, a blank line between the
+lines, <code>Chapter: Ten</code>), Reader says why and asks, instead of making a new
+story. To fix it, tap <strong>Discard</strong>, correct the file, and share it again.</li>
+<li>Without a <code>Chapter:</code> line, a shared chapter goes at the end.</li>
+</ul>
+<p><strong>Fixing a work's chapters:</strong> on a work you uploaded, open its story page
+and tap <strong>Chapters</strong>, then <strong>Edit</strong>.</p>
+<ul>
+<li><strong>↑ ↓</strong> move a chapter one place. For a long jump, tap the pencil, then
+<strong>Move to…</strong> and type the number.</li>
+<li>The pencil also has <strong>Rename</strong> (the chapter's title only) and <strong>Delete
+chapter</strong>. Delete says how many bookmarks and highlights go with the
+chapter, and can't be undone. A work's only chapter can't be deleted
+(delete the story instead).</li>
+<li>Your reading place stays on the same text, on every device. On this
+phone the reader opens on the new order right away; another device
+that already had the story open shows the new order the next time it
+opens it.</li>
+<li>If the list changed on another device meanwhile, Reader refreshes it and
+asks you to try again, rather than moving the wrong chapter.</li>
+<li>Stories imported from a site (AO3 and the like) can't be edited: a
+re-fetch rebuilds them from the site.</li>
+</ul>
 <h3 id="api-tokens-safari-only"><a class="anchor" href="#api-tokens-safari-only" aria-hidden="true" tabindex="-1">#</a>API tokens (Safari only)</h3>
 <p>The <strong>API Tokens</strong> button at the top of the Library is only for people who
 use Reader in Safari and want an iPhone Shortcut to send links to it. (The
@@ -729,9 +852,20 @@ to the server so it can be fixed. The report never includes what you're
 reading.</p>
 
   </main>
-  <footer>
-    <p><a href="../">paperhurts</a> &middot; <a href="#">back to top</a></p>
-  </footer>
+  <p class="to-top"><a href="#">back to top</a></p>
 </div>
+<footer class="site-footer">
+  <nav aria-label="Site">
+    <a href="../founding/">Founding seats</a>
+    <a href="../terms/">Terms</a>
+    <a href="../privacy/">Privacy</a>
+    <a href="../refunds/">Refunds</a>
+    <a href="../copyright/">Copyright</a>
+    <a href="../contact/">Contact</a>
+    <a href="../guide/" aria-current="page">User guide</a>
+  </nav>
+  <p>Paperhurts Reader is unofficial and is not affiliated with any site you import from.</p>
+  <p>All stories belong to their authors.</p>
+</footer>
 </body>
 </html>
