@@ -1,5 +1,5 @@
 /* Shared styles for reader.paperhurts.dev: the landing page and the
- * founding, terms, privacy, refunds, copyright and contact pages.
+ * membership, terms, privacy, refunds, copyright and contact pages.
  * The guide (/guide/) has its own stylesheet, built from the Reader repo.
  * No page on this site runs JavaScript or loads anything from another host. */
 
@@ -304,6 +304,7 @@ a:focus-visible, .btn:focus-visible { outline: 2px solid var(--accent-glow); out
   border: 1px solid rgba(196, 149, 106, 0.2);
   border-radius: 3px;
   padding: 1.75rem 1.25rem;
+  margin-top: 1.75rem;
   text-align: center;
 }
 .pricing .label {
