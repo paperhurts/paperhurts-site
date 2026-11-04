@@ -22,16 +22,17 @@
 
   <article class="doc">
     <h1>Privacy policy</h1>
-    <p class="updated">Draft of November 3, 2026 · Effective <span class="ph">[date]</span></p>
+    <p class="updated">Draft of November 4, 2026 · Effective <span class="ph">[date]</span></p>
+    <p><span class="ph">[Publish after the move to the new server is done. Hosting, backups and their encryption below describe the new server.]</span></p>
 
     <div class="summary">
       <h2>In short</h2>
       <ul>
         <li>Our server stores your library's text and page images so your devices stay in sync. In the app, only your account can see them. The developer can reach the database, but doesn't open libraries except to fix a problem you report, or when the law requires it.</li>
-        <li>Backups will be encrypted once we move to our new server. <span class="ph">[After the move: "Backups are encrypted."]</span> If data is ever exposed, every account gets an email.</li>
+        <li>Backups are encrypted before they leave our server. If data is ever exposed, every account gets an email.</li>
         <li>No ads, no analytics, no trackers, no third-party scripts and no cookies, on this site or in the app.</li>
         <li>We never sell your data or use your library to train AI, and the app never sends your library to any AI service. Narration uses your device's own voices.</li>
-        <li>Delete your account and everything in it is gone from our live systems at once, and from backups within <span class="ph">[30]</span> days.</li>
+        <li>Delete your account and everything in it is gone from our live systems at once, and from backups within <span class="ph">[33 or more]</span> days.</li>
       </ul>
     </div>
 
@@ -85,7 +86,7 @@
       <dd><p>Emails you send us, including requests to hear when supporter membership opens, and our replies.</p></dd>
 
       <dt>Server logs</dt>
-      <dd><p>A record of requests to our server: the time, which part of the app was used, your account's internal id, and whether it worked. Import messages can include a story's title and web address. Our server sees your IP address to answer each request, and holds it briefly in memory to stop abuse such as password guessing, but our logs don't record it. <span class="ph">[Confirm this still holds on the new server.]</span></p></dd>
+      <dd><p>A record of requests to our server: the time, which part of the app was used, your account's internal id, and whether it worked. Import messages can include a story's title and web address. Our server sees your IP address to answer each request, and holds it briefly in memory to stop abuse such as password guessing, but our logs don't record it.</p></dd>
 
       <dt>Error reports</dt>
       <dd><p>If the app hits an error, it sends us the error message, a technical trace, which screen you were on, a random id for that visit, and whether you were using the iPhone app. Anything that looks like a password or token is removed first. These end up in our server logs.</p></dd>
@@ -121,22 +122,24 @@
     <p>We'd disclose data to authorities only when the law requires it, and we'd tell you unless the law forbids that.</p>
 
     <h2 id="processors">7. Who processes it, and where</h2>
-    <p>A few companies process data for us, each only to provide its part of the service:</p>
+    <p>A few companies process data for us, each to provide its part of the service. Google and our payment provider also handle it under their own privacy policies:</p>
     <dl>
       <dt>Hosting</dt>
-      <dd><p><span class="ph">[hosting provider]</span> runs our server, in <span class="ph">[country / region]</span>. Your account and library live there.</p></dd>
+      <dd><p>DigitalOcean runs our server, in its San Francisco data centre in the United States. Your account and library live there.</p></dd>
       <dt>Backups</dt>
-      <dd><p>Nightly backups are stored with <span class="ph">[backup storage provider]</span>, in <span class="ph">[country / region]</span>. They'll be encrypted once we move to our new server. <span class="ph">[After the move: "They're encrypted."]</span></p></dd>
+      <dd><p>Nightly backups are stored with Backblaze B2, in its US West region in the United States. They're encrypted on our server before they're sent, so Backblaze can't read them.</p></dd>
       <dt>Email delivery</dt>
-      <dd><p><span class="ph">[email delivery provider]</span> sends account emails such as password resets. It sees your email address and the message.</p></dd>
+      <dd><p>Resend sends the app's emails: password resets and notices about the service, never marketing. It sees your email address and the message.</p></dd>
       <dt>Our mailbox</dt>
-      <dd><p><span class="ph">[mailbox provider]</span> hosts support@paperhurts.dev, so it holds the emails you send us.</p></dd>
+      <dd><p>Namecheap, our domain registrar, forwards mail sent to support@paperhurts.dev, or any other @paperhurts.dev address, to a Gmail mailbox. Google holds the emails you send us there, under its own privacy policy.</p></dd>
+      <dt>Uptime, disk and backup alerts</dt>
+      <dd><p>Our server sends healthchecks.io short status messages: every five minutes, whether the app is answering and how full the disk is, and each night, whether the backup worked. They carry only sizes, counts and error messages about the server, never anything from your account or library. If a message reports a problem, or they stop arriving, the developer gets an email.</p></dd>
       <dt>Payments</dt>
       <dd><p><span class="ph">[payment provider]</span> is our reseller and merchant of record. It collects your payment details directly and handles them under its own privacy policy.</p></dd>
       <dt>This website</dt>
       <dd><p>This site is served by GitHub Pages, run by GitHub, Inc. GitHub may log visitors' IP addresses to keep its service secure. The site itself sets no cookies and runs no scripts.</p></dd>
     </dl>
-    <p>Our servers are in <span class="ph">[country]</span>. If you use Paperhurts from elsewhere, your data is transferred there.</p>
+    <p>Our server and its backups are in the United States. If you use Paperhurts from elsewhere, your data is transferred there.</p>
 
     <h2 id="other-sites">8. Other websites</h2>
     <ul>
@@ -149,7 +152,7 @@
     <h2 id="retention">9. How long we keep it</h2>
     <ul>
       <li><strong>Your account and library:</strong> until you delete them.</li>
-      <li><strong>Something you delete:</strong> removed from our live systems straight away, and from backups within <span class="ph">[30]</span> days as old backups are replaced.</li>
+      <li><strong>Something you delete:</strong> removed from our live systems straight away, and from backups within <span class="ph">[33 or more]</span> days as old backups are replaced.</li>
       <li><strong>Server logs and error reports:</strong> up to <span class="ph">[30]</span> days.</li>
       <li><strong>Requests to hear when membership opens:</strong> until we've emailed you that it's open, or until you ask us to remove yours, whichever comes first. The limit for emails below still applies.</li>
       <li><strong>Emails with us:</strong> as long as we need them to help you, and no longer than <span class="ph">[2 years]</span>.</li>
@@ -157,7 +160,7 @@
     </ul>
 
     <h2 id="deleting">10. Deleting your account</h2>
-    <p>You can delete your account at any time from the Account page in the app, or by emailing us from the address on the account. Deleting it removes your account and everything in it: every story and file, page images, your place in every story, bookmarks, highlights, notes, settings and API tokens. It's removed from our live systems straight away, and from backups within <span class="ph">[30]</span> days.</p>
+    <p>You can delete your account at any time from the Account page in the app, or by emailing us from the address on the account. Deleting it removes your account and everything in it: every story and file, page images, your place in every story, bookmarks, highlights, notes, settings and API tokens. It's removed from our live systems straight away, and from backups within <span class="ph">[33 or more]</span> days.</p>
     <p>Our payment provider keeps its own records of past payments, as the law requires. If you want your emails with us deleted too, just ask.</p>
     <p>If you'd like to keep your stories, export them first.</p>
 
@@ -173,7 +176,7 @@
     <p>If you're in California: we don't sell or share your personal information, as those terms are defined in California law. If you're in the EU or UK, you can also complain to your data protection authority. <span class="ph">[EU/UK details: lawyer to confirm.]</span></p>
 
     <h2 id="security">12. Security</h2>
-    <p>Connections to Paperhurts are encrypted (HTTPS). Passwords are stored only as one-way hashes. Backups will be encrypted once we move to our new server <span class="ph">[after the move: "Backups are encrypted."]</span>. Only the developer who runs Paperhurts administers the server; the providers listed above host it. No service is perfectly secure, though. If data is ever exposed, we'll email every account without undue delay with what happened and what you can do, and we'll notify the authorities where the law requires.</p>
+    <p>Connections to Paperhurts are encrypted (HTTPS). Passwords are stored only as one-way hashes. Backups are encrypted before they leave our server. Only the developer who runs Paperhurts administers the server; DigitalOcean hosts it and Backblaze stores its backups. No service is perfectly secure, though. If data is ever exposed, we'll email every account without undue delay with what happened and what you can do, and we'll notify the authorities where the law requires.</p>
 
     <h2 id="age">13. Age</h2>
     <p>Paperhurts is for adults: you must be 18 or older to use it. If we learn that an account belongs to someone under 18, we close it and delete its data.</p>
