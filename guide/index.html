@@ -4,9 +4,8 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <meta name="robots" content="noarchive">
-<meta name="description" content="How to install, read, listen and import in paperhurts Reader — a guide for invited readers.">
+<meta name="description" content="How to install, read, listen and import in paperhurts reader — a guide for invited readers.">
 <title>User guide · paperhurts</title>
-<link rel="preconnect" href="https://fonts.gstatic.com/" crossorigin="">
 <link href="../index_files/fonts.css" rel="stylesheet">
 <style>
   :root {
@@ -45,7 +44,7 @@
   }
   .ambient {
     position: fixed; top: -30%; left: 50%; transform: translateX(-50%);
-    width: 120vw; height: 60vh;
+    width: 100%; height: 60vh;
     background: radial-gradient(ellipse, rgba(196, 149, 106, 0.04) 0%, transparent 70%);
     pointer-events: none; z-index: 0;
   }
@@ -194,19 +193,50 @@
     color: var(--text-dim);
     line-height: 1.5;
   }
-  footer {
-    margin-top: 4rem;
-    padding-top: 1.5rem;
-    border-top: 1px solid var(--rule);
+  .to-top {
+    margin: 4rem 0 0;
     text-align: center;
     font-family: 'JetBrains Mono', monospace;
     font-size: 0.62rem;
     letter-spacing: 0.2em;
-    color: var(--text-faint);
     text-transform: uppercase;
   }
-  footer a { color: var(--text-dim); text-decoration: none; }
-  footer a:hover { color: var(--accent-glow); }
+  .to-top a { color: var(--text-dim); text-decoration: none; }
+  .to-top a:hover { color: var(--accent-glow); }
+  /* The site footer, as on the site's other pages */
+  .site-footer {
+    position: relative; z-index: 1;
+    max-width: 700px;
+    margin: 0 auto;
+    padding: 2rem 1.25rem 3rem;
+    border-top: 1px solid var(--rule);
+    text-align: center;
+  }
+  .site-footer nav {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 0.4rem 1.2rem;
+    margin-bottom: 1.25rem;
+  }
+  .site-footer nav a {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.7rem;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    text-decoration: none;
+    color: var(--text-dim);
+    padding: 0.3rem 0;
+  }
+  .site-footer nav a:hover, .site-footer nav a[aria-current="page"] { color: var(--accent-glow); }
+  .site-footer p { font-size: 1rem; color: var(--text-dim); margin-bottom: 0.4rem; }
+  .site-footer .copy {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.65rem;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    margin-top: 0.75rem;
+  }
   @media (max-width: 580px) {
     body { font-size: 1.12rem; }
     .wrap { padding: 1.75rem 16px 3rem; }
@@ -231,16 +261,15 @@
     <ol><li><a href="#getting-in">Getting in</a></li><li><a href="#your-library">Your library</a></li><li><a href="#reading">Reading</a></li><li><a href="#listening">Listening</a></li><li><a href="#on-the-go">On the go</a></li><li><a href="#troubleshooting">Troubleshooting</a></li></ol>
   </nav>
   <main>
-<p>paperhurts Reader is a private reading app for long fiction. It keeps your
+<p>paperhurts reader is a private reading app for long fiction. It keeps your
 stories in one library, reads them to you out loud (even with the screen
 locked), remembers your place on every device, and keeps working when you
 lose signal.</p>
 <p>This guide is for someone who has just been invited. You don't need to know
 anything technical — only how to use an iPhone.</p>
 <h2 id="getting-in"><a class="anchor" href="#getting-in" aria-hidden="true" tabindex="-1">#</a>Getting in</h2>
-<p>You'll need three things from the person who invited you: a link to install
-the iPhone app, an invitation to their private network, and an invite code.
-The steps below take about ten minutes.</p>
+<p>You'll need two things from the person who invited you: a link to install
+the iPhone app, and an invite code. The steps below take about ten minutes.</p>
 <h3 id="1-install-the-iphone-app"><a class="anchor" href="#1-install-the-iphone-app" aria-hidden="true" tabindex="-1">#</a>1. Install the iPhone app</h3>
 <p>The app isn't in the App Store — the person who invited you builds it for
 your phone.</p>
@@ -258,36 +287,70 @@ After the phone restarts and you unlock it, tap <strong>Turn On</strong> when as
 (The Developer Mode switch only shows up after the app is installed and
 you've tried to open it once.)</li>
 </ol>
-<h3 id="2-join-the-private-network"><a class="anchor" href="#2-join-the-private-network" aria-hidden="true" tabindex="-1">#</a>2. Join the private network</h3>
-<p>Your library lives on a small private server, and your phone reaches it
-through an app called <strong>Tailscale</strong>.</p>
+<h3 id="2-create-your-account"><a class="anchor" href="#2-create-your-account" aria-hidden="true" tabindex="-1">#</a>2. Create your account</h3>
 <ol>
-<li>Install <strong>Tailscale</strong> from the App Store and sign in.</li>
-<li>Accept the invitation the person who invited you sends.</li>
-<li>Keep Tailscale switched on whenever you want to reach your library. If
-it's off, the reader can't sync, import, or open stories you haven't
-saved for offline reading.</li>
-</ol>
-<h3 id="3-create-your-account"><a class="anchor" href="#3-create-your-account" aria-hidden="true" tabindex="-1">#</a>3. Create your account</h3>
-<ol>
-<li>Open <strong>paperhurts</strong> (with Tailscale on).</li>
+<li>Open <strong>paperhurts</strong>.</li>
 <li>Tap <strong>Register</strong> under the sign-in form.</li>
-<li>Fill in your email, a username, and a password (twice), then type the
-<strong>invite code</strong> the person who invited you gave you. Tap <strong>Register</strong>.</li>
+<li>Fill in your email, a username, and a password of at least 12 characters
+(twice; a short phrase of a few words is easy to remember and works
+well), then type the <strong>invite code</strong> the person who invited you gave
+you. Each code works once. Tick <strong>I’m 18 or older</strong>, then tap
+<strong>Register</strong>.</li>
 </ol>
 <p>You land on the <strong>Tonight</strong> screen, signed in. If the app ever asks you to
 sign in again, use the same email and password. (<strong>Logout</strong> is at the top of
-the <strong>Library</strong> tab, next to a <strong>User guide</strong> button that opens this guide.)</p>
-<p>Your library belongs to your account: other people who use the same server
-can't see your stories, bookmarks, or notes.</p>
+the <strong>Library</strong> tab, after a <strong>User guide</strong> button that opens this guide and
+<strong>About</strong>.)</p>
+<p>Your library belongs to your account: other people who use Reader can't see
+your stories, bookmarks, or notes.</p>
+<p><strong>About:</strong> before you register, <strong>About this app and what it stores</strong> under
+the form opens a page about Reader; later it's <strong>About</strong> at the top of the
+Library tab. It says Reader is unofficial (not part of AO3 or the
+Organization for Transformative Works), what the server keeps and who can
+see it, where to write if you want a work removed, and links to support the
+OTW, which runs AO3.</p>
+<h3 id="changing-your-password"><a class="anchor" href="#changing-your-password" aria-hidden="true" tabindex="-1">#</a>Changing your password</h3>
+<p>Tap <strong>Account</strong> at the top of the <strong>Library</strong> tab. Type your current
+password, then the new one twice (at least 12 characters), and tap <strong>Change
+password</strong>. Your other devices stay signed in. If you made an
+<a href="#api-tokens-safari-only">API token</a> for a Shortcut, it keeps working too.</p>
+<p>If your account is older than the 12-character rule, your old password
+still works until you change it.</p>
+<h3 id="forgot-your-password"><a class="anchor" href="#forgot-your-password" aria-hidden="true" tabindex="-1">#</a>Forgot your password?</h3>
+<p>On the sign-in screen, tap <strong>Forgot your password?</strong>, type your email and
+tap <strong>Send reset link</strong>. If an account uses that email, a link arrives by
+email (check your spam folder if you don't see it). Open it, type a new
+password twice and tap <strong>Change password</strong>. The link works once, for 30
+minutes, and signs out every device signed in to your account: sign in
+again with the new password.</p>
+<h3 id="deleting-your-account"><a class="anchor" href="#deleting-your-account" aria-hidden="true" tabindex="-1">#</a>Deleting your account</h3>
+<p>Tap <strong>Account</strong> at the top of the <strong>Library</strong> tab, then <strong>Delete my
+account…</strong>. Type your password, tap <strong>Delete account</strong>, and confirm.
+Everything in it goes: your stories and books, bookmarks, highlights,
+reading places, settings and API tokens. Every device you're signed in on
+is signed out. It can't be undone, so if you want to keep your stories,
+<a href="#taking-your-whole-library-with-you">export your library</a> first.</p>
 <h3 id="prefer-safari"><a class="anchor" href="#prefer-safari" aria-hidden="true" tabindex="-1">#</a>Prefer Safari?</h3>
-<p>You can also use Reader in Safari instead of the app. With Tailscale on,
-open the web address the person who invited you gives you, sign in, then tap
-<strong>Share → Add to Home Screen</strong> so it opens like an app.</p>
-<p>Reading works the same in both. For <strong>listening</strong>, use the iPhone app:
-narration there keeps playing with the screen locked and works with the
-lock screen, CarPlay and Bluetooth. In Safari it's less dependable once the
-screen locks. Sharing to Reader from other apps also needs the iPhone app.</p>
+<p>You can also use Reader in Safari instead of the app. Open the web address
+the person who invited you gives you, sign in, then tap <strong>Share → Add to
+Home Screen</strong> so it opens like an app.</p>
+<p>Reading works the same in both. A few things need the iPhone app:</p>
+<ul>
+<li><strong>Adding stories from AO3.</strong> The app fetches them from AO3 on your phone.
+In Safari you can still import from the other sites and upload files: on
+AO3, tap <strong>Download → EPUB</strong> and upload the file.</li>
+<li><strong>Listening.</strong> In the app, narration keeps playing with the screen locked
+and works with the lock screen, CarPlay and Bluetooth. In Safari it's
+less dependable once the screen locks.</li>
+<li><strong>Sharing to Reader</strong> from other apps.</li>
+</ul>
+<h3 id="on-android"><a class="anchor" href="#on-android" aria-hidden="true" tabindex="-1">#</a>On Android</h3>
+<p>There's no Android app yet: use the website in <strong>Chrome</strong>. From the person
+who invited you, you need only the invite code and the web address. Open
+the address, register as in step 2 above, then tap Chrome's <strong>⋮</strong> menu →
+<strong>Add to Home screen</strong> (it may say <strong>Install app</strong>) so it opens like an
+app. As in Safari, add AO3 stories as files (<strong>Download → EPUB</strong> on AO3),
+and narration stops when the screen locks.</p>
 <h2 id="your-library"><a class="anchor" href="#your-library" aria-hidden="true" tabindex="-1">#</a>Your library</h2>
 <p>Four tabs run along the bottom of the screen: <strong>Tonight</strong>, <strong>Library</strong>,
 <strong>Search</strong> and <strong>Import</strong>.</p>
@@ -299,7 +362,9 @@ it and starts reading aloud (in Safari, Listen opens the audio controls and
 you tap Play).</p>
 <p>Below it:</p>
 <ul>
-<li><strong>In progress</strong> — other stories you've started.</li>
+<li><strong>In progress</strong> — other stories you've started. A story that's still
+being written stays here, even once you've caught up, until it's marked
+complete.</li>
 <li><strong>New chapters</strong> — stories with new chapters waiting (see
 <a href="#checking-for-new-chapters">Checking for new chapters</a>).</li>
 <li><strong>Up next</strong> — the next part of a series you're working through.</li>
@@ -312,10 +377,11 @@ reading.</p>
 <p>The <strong>Library</strong> tab lists everything you've added.</p>
 <ul>
 <li><strong>Search box</strong> — type part of a title, author, or tag.</li>
-<li><strong>Quick filters</strong> (the row of chips) — <strong>All</strong>, <strong>Reading</strong> (started but
-not finished), <strong>New chapters</strong>, <strong>Series</strong>, <strong>Complete</strong> (you've read it
-all). If your stories come from more than one site, there's a chip per
-site too, plus <strong>📁 Uploaded</strong> for files you added yourself.</li>
+<li><strong>Quick filters</strong> (the row of chips) — <strong>All</strong>, <strong>Reading</strong> (the same
+stories as Tonight's <strong>In progress</strong>), <strong>New chapters</strong>, <strong>Series</strong>,
+<strong>Complete</strong> (you've read it all, and it's finished). If your stories
+come from more than one site, there's a chip per site too, plus
+<strong>📁 Uploaded</strong> for files you added yourself.</li>
 <li><strong>Each row</strong> shows the title, author, length, summary and tags, plus a
 progress bar along the bottom edge and your percentage read. <strong>✓ Offline</strong>
 means the story is saved on this phone. A badge like <strong>+2 NEW</strong> means new
@@ -327,6 +393,10 @@ parts read&quot;). Its button opens the part you're up to; tap the card to see
 every part.</li>
 <li><strong>Tap a row</strong> to open the story's page. <strong>Tap its button</strong> (<strong>Read</strong>,
 <strong>Resume</strong> or <strong>Import</strong>) to go straight to reading.</li>
+<li><strong>Removed at its author's request</strong> — if an author asks for a work to be
+taken down, it leaves the app: this row takes the story's place, its copy
+on your phone is deleted, and it can't be added again. Tap <strong>✕</strong> to
+dismiss the row.</li>
 </ul>
 <p>The <strong>Search</strong> tab does the same kind of search across your whole library
 (titles, authors, tags and series names) and shows results as you type.</p>
@@ -348,7 +418,8 @@ manga.</li>
 <p>When any filter is on, a <strong>Clear filters</strong> button appears on the Library tab.</p>
 <h3 id="checking-for-new-chapters"><a class="anchor" href="#checking-for-new-chapters" aria-hidden="true" tabindex="-1">#</a>Checking for new chapters</h3>
 <p>Reader doesn't check for updates on its own. When you want to know if
-anything new has been posted:</p>
+anything new has been posted to your forum stories (SpaceBattles,
+Sufficient Velocity, Questionable Questing, AlternateHistory):</p>
 <ol>
 <li>Open <strong>Filters</strong> and tap <strong>Check for Updates</strong>. Tick <strong>incl. completed</strong>
 first if you also want to re-check stories the author has marked
@@ -358,8 +429,13 @@ You can keep reading while it runs.</li>
 <li>Stories with new chapters get a <strong>+N NEW</strong> badge and appear under <strong>New
 chapters</strong> on Tonight. The badge clears when you open the story to read.</li>
 </ol>
+<p>It checks each forum story once a day: run it again the same day and, when
+it finishes, it says how many it had already checked.</p>
 <p>To update just one story, open its page and tap <strong>Re-fetch</strong>. The button
 turns amber when the site has posted chapters since your last fetch.</p>
+<p><strong>AO3 stories aren't part of Check for Updates</strong> (when it finishes, it says
+how many it didn't check). To see if one has new chapters, open its page in
+the iPhone app and tap <strong>Re-fetch</strong>: the app asks AO3 from your phone.</p>
 <p>When a story has new chapters, Reader usually downloads just the new ones.
 So if an author also rewrote or reordered earlier chapters, tap <strong>Re-fetch</strong>
 once more after the chapter count matches the site — that pass re-checks
@@ -369,57 +445,107 @@ every chapter.</p>
 <figure><img src="images/import-sheet.png" alt="The Import sheet: paste a link, or upload a file." width="390" height="844" loading="lazy" decoding="async"><figcaption>The Import sheet: paste a link, or upload a file.</figcaption></figure>
 <p>Tap <strong>Import</strong> in the tab bar.</p>
 <p><strong>From a website:</strong> paste the story's address into the box and tap
-<strong>Import</strong>. Supported sites are AO3, FanFiction.Net, SpaceBattles,
-Sufficient Velocity and Questionable Questing. You can close the sheet and
-keep reading — a small progress pill floats above the tab bar; tap it to
-reopen the sheet. A single story imported this way is also saved for offline
-reading on that phone when it finishes.</p>
-<p>You can also paste:</p>
+<strong>Import</strong>. Supported sites are AO3, SpaceBattles, Sufficient Velocity,
+Questionable Questing and AlternateHistory. Import AO3 stories in the
+iPhone app: it fetches them from AO3 on your phone, one work at a time.
+You can close the sheet and keep reading — a small progress pill floats
+above the tab bar; tap it to reopen the sheet. A single story imported this
+way is also saved for offline reading on that phone when it finishes.</p>
 <ul>
-<li><strong>An AO3 series link</strong> — you get the list of works with checkboxes; pick
-the ones you want (<strong>Select All New</strong> skips ones you already have) and tap
-<strong>Import N Works</strong>.</li>
-<li><strong>Your AO3 bookmarks page</strong> or <strong>a FanFiction.Net profile</strong> (then choose
-<strong>Favorites</strong>, <strong>Follows</strong> or <strong>Both</strong>) — every story on the list is added
-to your library as <strong>Not imported</strong>: just its title and details, ready for
-later. Tap <strong>Import</strong> on one when you want to read it. Scanning AO3
-bookmarks is slow on purpose (AO3 allows about one request a second).</li>
+<li><strong>An AO3 link in Safari or Chrome</strong> tells you to import it in the iPhone
+app, or to tap <strong>Download → EPUB</strong> on AO3 and upload the file. It also
+offers <strong>Find another copy</strong> (see
+<a href="#when-ao3-wont-send-a-story">When AO3 won't send a story</a>).</li>
+<li><strong>A FanFiction.Net story</strong> comes in as a file: save it as an EPUB with
+FicHub or FanFicFare, then upload it.</li>
+<li><strong>A link from any other site</strong> gets a message listing the sites Reader
+can import from. Upload the story as a file instead.</li>
 </ul>
+<p><strong>Forum stories have a daily limit.</strong> Each SpaceBattles, Sufficient
+Velocity, Questionable Questing or AlternateHistory story you import counts
+against it. A forum story already in your library gets one check a day of
+its own that doesn't count: <strong>Check for Updates</strong>, <strong>Re-fetch</strong> or <strong>Fetch
+the rest</strong> uses it, and another <strong>Re-fetch</strong> or <strong>Fetch the rest</strong> that day
+counts like an import. A fetch that fails doesn't count. When the day's
+imports are used up, Reader tells you how many you've had and when more are
+available. A link
+you shared to Reader waits, and imports the next time you open the app
+after that.</p>
 <p><strong>From a file:</strong></p>
 <ul>
-<li><strong>Upload EPUB</strong> — ebooks (for example from Project Gutenberg).</li>
-<li><strong>Upload Book (PDF/CBZ)</strong> — PDFs and comics/manga, shown page by page
-(see <a href="#books-and-manga">Books and manga</a>).</li>
-<li><strong>Upload Markdown</strong> — <code>.md</code> or <code>.txt</code> files, e.g. your own writing. You
+<li>
+<p><strong>Upload EPUBs</strong> — ebooks, as many as you like at once (on a computer
+you can also drag them onto the Import sheet). Each file gets a line
+saying what happened to it, and you can keep reading while they import.
+Downloads from AO3's own <strong>Download → EPUB</strong>, from FicHub and from
+FanFicFare are recognised as the story they are: importing a newer
+download of a story you already have <strong>updates that story</strong> (new chapters
+added, your place kept) instead of adding a second copy, and that works
+for a story you first added by its link too. A download never removes
+chapters you already have, and a cut-off copy never shortens one: a
+chapter with much less text in the file stays as it was, and the file's
+line says so.
+A new upload starts in progress: tick <strong>These stories are complete</strong>
+first to mark the whole batch complete. A download from AO3, FicHub or
+FanFicFare takes the status its site gave it, and a newer download can
+update it. Uploading a new version of any other file never changes its
+story's status.</p>
+</li>
+<li>
+<p><strong>Upload Book (PDF/CBZ)</strong> — PDFs and comics/manga, shown page by page
+(see <a href="#books-and-manga">Books and manga</a>). Your PDF and CBZ books can
+take up to 2 GB together. The line under the buttons says how much they
+use. A book you start uploading is never cut off by the limit; once your
+books reach 2 GB, delete one to upload another.</p>
+</li>
+<li>
+<p><strong>Upload Markdown</strong> — <code>.md</code> or <code>.txt</code> files, e.g. your own writing. You
 choose whether it starts a new work or adds chapters to one you uploaded
-before.</li>
-<li><strong>Upload Doc (DOCX/ODT)</strong> — Word or Google Docs exports, either a finished
-work or one chapter of an ongoing one.</li>
+before. A chapter file titled like one of your works (its <code>#</code> heading or
+a <code>title:</code> line) is set to go into that work automatically, and the confirm
+screen says so. If the file starts with a <code>story:</code> line and a <code>#</code> heading
+that repeats the work's name, the chapter is named by its own heading
+underneath (for example &quot;Chapter Ten — Radio Silence&quot;). Pick <strong>New work</strong>
+if it's a separate story. A <code>story:</code>
+line at the top of the file names the work explicitly.</p>
+</li>
+<li>
+<p><strong>Upload Doc (DOCX/ODT)</strong> — Word or Google Docs exports, either a finished
+work or one chapter of an ongoing one. A new story starts in progress;
+tick <strong>This story is complete</strong> for a finished one.</p>
+</li>
 </ul>
 <p><strong>In progress:</strong> while anything is downloading — including fetches started
 from a story's page, from the share sheet, or on another device — the top of
 the Import sheet lists it with a live chapter count (&quot;Chapter 35 of 72&quot;).
 Check here before tapping a button a second time.</p>
 <p><strong>If an import fails</strong>, it's listed at the top of the Library with
-<strong>Retry</strong> and <strong>Dismiss</strong> buttons. If a site is blocking downloads for a
-while, the Import button shows a countdown (&quot;Cooldown 12:30&quot;) and becomes
-available again when it reaches zero.</p>
+<strong>Retry</strong> and <strong>Dismiss</strong> buttons.</p>
 <h3 id="incomplete-stories"><a class="anchor" href="#incomplete-stories" aria-hidden="true" tabindex="-1">#</a>Incomplete stories</h3>
 <figure><img src="images/story-incomplete.png" alt="A story page showing the &quot;Incomplete · 4/28&quot; badge and the Fetch the rest button." width="390" height="844" loading="lazy" decoding="async"><figcaption>A story page showing the &quot;Incomplete · 4/28&quot; badge and the Fetch the rest button.</figcaption></figure>
-<p>Some sites — FanFiction.Net especially — cut a long download off partway.
-Instead of throwing away what it got, Reader keeps it and marks the story
-<strong>Incomplete · 4/28</strong> (4 of 28 chapters so far). You can start reading those
-chapters right away.</p>
+<p>Sometimes a site cuts a long download off partway. Instead of throwing away
+what it got, Reader keeps it and marks the story <strong>Incomplete · 4/28</strong> (4 of
+28 chapters so far). You can start reading those chapters right away.</p>
 <p>To get the rest:</p>
 <ol>
-<li>Wait about <strong>30 minutes</strong> (the site needs a break).</li>
-<li>Open the story's page and tap <strong>Fetch the rest</strong>. Only the missing
-chapters are downloaded; you can watch it under <strong>In progress</strong> in the
-Import sheet.</li>
+<li>Give the site a break for a while.</li>
+<li>Open the story's page and tap <strong>Fetch the rest</strong> (for an AO3 story, in
+the iPhone app). Only the missing chapters are downloaded; you can watch
+it under <strong>In progress</strong> in the Import sheet.</li>
 <li>Very long stories may need a few rounds. If you tap too soon, you'll see
 a message saying how many minutes to wait.</li>
 </ol>
 <p>When every chapter has arrived, the badge disappears.</p>
+<h3 id="when-ao3-wont-send-a-story"><a class="anchor" href="#when-ao3-wont-send-a-story" aria-hidden="true" tabindex="-1">#</a>When AO3 won't send a story</h3>
+<p>Sometimes AO3 turns Reader away for a while (&quot;AO3 is refusing …&quot;). When
+that happens to an import or a <strong>Re-fetch</strong>, a <strong>Get it from another copy</strong>
+box appears under the message. Tap <strong>Find another copy</strong>:</p>
+<ul>
+<li><strong>FicHub</strong> makes an ebook of the story. Tap <strong>Open FicHub</strong>, download the
+EPUB it offers, then share the file to the app: it updates the story you
+already have, and your place is kept.</li>
+<li><strong>Wayback Machine</strong> opens a saved copy of the story's page, to read there.</li>
+</ul>
 <h3 id="the-story-page"><a class="anchor" href="#the-story-page" aria-hidden="true" tabindex="-1">#</a>The story page</h3>
 <figure><img src="images/story-page.png" alt="A story page with Resume, Listen and Save Offline buttons, and the Marks list of bookmarks and highlights." width="390" height="844" loading="lazy" decoding="async"><figcaption>A story page with Resume, Listen and Save Offline buttons, and the Marks list of bookmarks and highlights.</figcaption></figure>
 <p>Tap any story's title to open its page: reading progress, the full summary,
@@ -430,40 +556,47 @@ all tags, and dates.</p>
 <li><strong>Save Offline</strong> — download every chapter to this phone (it changes to
 <strong>Cached</strong> when done).</li>
 <li><strong>Re-fetch</strong> — check the site for changes to this story (not shown for
-uploaded files). On an incomplete story this button is <strong>Fetch the rest</strong>.</li>
+uploaded files; for an AO3 story, use it in the iPhone app). On an
+incomplete story this button is <strong>Fetch the rest</strong>.</li>
 <li><strong>Part 2 of …</strong> (only for stories in a series) — opens the series page.</li>
-<li><strong>More</strong> — less common actions: <strong>Send a copy</strong>, <strong>Clear Progress</strong>,
-<strong>Delete</strong>, and for uploaded files <strong>Rename</strong> and <strong>Mark Complete</strong>.</li>
+<li><strong>More</strong> — less common actions: <strong>Share link</strong>, <strong>Export EPUB</strong>,
+<strong>Clear Progress</strong>, <strong>Delete</strong>, and for uploaded files <strong>Rename</strong>,
+<strong>Mark Complete</strong> and <strong>Series…</strong> (see <a href="#series">Series</a>).</li>
 </ul>
+<p><strong>Share link</strong> sends the story's web address to someone: in the iPhone app
+it opens the share sheet, and in a browser it copies the address (&quot;Link
+copied&quot;). A story you uploaded from a file has it only if the file says
+where the story came from.</p>
+<p><strong>Export EPUB</strong> saves the story as an EPUB file you can open in Books or
+any ebook app. In the iPhone app, tap <strong>Save EPUB…</strong> when it's ready and
+choose <strong>Save to Files</strong> or <strong>Books</strong>. Importing that file again later
+updates the same story instead of adding a copy.</p>
 <p><strong>Marks</strong> lists everything you've marked in the story: the 🎧 and ⏹
 listening markers, your bookmarks (with their notes) and your highlights.
 Tap one to open the reader right at that spot. That spot becomes your new
 reading position.</p>
-<h3 id="sending-a-book-to-a-friend"><a class="anchor" href="#sending-a-book-to-a-friend" aria-hidden="true" tabindex="-1">#</a>Sending a book to a friend</h3>
-<p>To give someone on the same server their own copy of a book, open its story
-page and tap <strong>More → Send a copy</strong>, then type their <strong>username or email</strong>
-exactly. There's no list of people to pick from, so you need to know it.
-The book lands straight in their library, marked <strong>From</strong> your username
-until they open it.</p>
-<ul>
-<li>Only the book travels. Your bookmarks, highlights, notes and progress stay
-with you, and they start from the beginning.</li>
-<li>An <strong>Incomplete</strong> story arrives incomplete; they can tap <strong>Fetch the rest</strong>
-on their copy.</li>
-<li>If they already have it, you'll see &quot;… already has this one&quot; and nothing
-changes for them.</li>
-<li>&quot;No one by that name or email.&quot; means the name didn't match, or that
-person has turned off receiving books. The app deliberately doesn't say
-which.</li>
-</ul>
-<p><strong>Don't want books sent to you?</strong> In the <strong>Library</strong> tab, tap <strong>Sharing</strong> at
-the top and switch off <strong>Let people send me books</strong>. Anyone who tries is then
-told there's no one by that name.</p>
+<h3 id="taking-your-whole-library-with-you"><a class="anchor" href="#taking-your-whole-library-with-you" aria-hidden="true" tabindex="-1">#</a>Taking your whole library with you</h3>
+<p>Tap <strong>Export</strong> at the top of the Library. Your stories are packed as EPUB
+files into zip files, in parts if your library is big (each part holds a
+few hundred stories at most). Tap <strong>Download</strong> for each part and keep the
+page open while it downloads. In the iPhone app, tap <strong>Save</strong> when a part
+is ready, then <strong>Save to Files</strong>.</p>
+<p>When a part finishes, the page says whether every story made it. If it
+says some ran out of time, tap <strong>Download again</strong>. Inside each zip,
+<code>export-report.txt</code> lists what's in it and anything left out. Books and
+manga (PDF/CBZ) and stories that aren't imported yet can't be exported.</p>
 <h3 id="series"><a class="anchor" href="#series" aria-hidden="true" tabindex="-1">#</a>Series</h3>
 <figure><img src="images/series-page.png" alt="A series page: each part in reading order, marked read, in progress, or unread." width="390" height="844" loading="lazy" decoding="async"><figcaption>A series page: each part in reading order, marked read, in progress, or unread.</figcaption></figure>
 <p>A series page lists every part in reading order with what you've read, and
 a <strong>Read</strong> / <strong>Resume</strong> button for each. Tap a part's title to see its own
-page.</p>
+page. At the end of a part, the reader offers the next one: <strong>Read Part 3</strong>
+opens it, and <strong>Open the series</strong> shows up when the next part isn't in your
+library yet or this was the last one.</p>
+<p>Stories you uploaded can be a series too: on a story's page, <strong>More</strong> →
+<strong>Series…</strong>, type the series name (the ones you already have are offered)
+and, if you like, its part. A chapter's <code>Series:</code> and <code>Part:</code> lines do the
+same, and an EPUB that names its series joins it. Your own series never mix
+with AO3's, even with the same name.</p>
 <h3 id="themes"><a class="anchor" href="#themes" aria-hidden="true" tabindex="-1">#</a>Themes</h3>
 <p>Reader comes in seven themes — <strong>System</strong> (follows your phone's light/dark
 setting), <strong>Dark</strong>, <strong>Light</strong>, <strong>Sepia</strong>, <strong>Night (AMOLED)</strong>, <strong>Solarized
@@ -567,8 +700,13 @@ a colour.</li>
 <p>Tap a highlight later to change its colour, edit its note, or delete it. The
 <strong>Highlights</strong> tab in the bookmarks list shows them all and can copy or
 download them as a text file (Markdown).</p>
-<p><strong>Look up a word:</strong> press and hold a single word to see its definition. This
-needs an internet connection.</p>
+<p><strong>Look up a word:</strong> press and hold a single word to see its definition. Words
+in other forms find their dictionary word (&quot;geese&quot; shows goose). The
+definitions come from Open English WordNet, and small words like &quot;of&quot; and
+&quot;during&quot; have definitions of our own, shown before WordNet's. They're
+looked up by the paperhurts server itself, so no outside service sees what
+you look up. This needs an internet connection. On iPhone, the menu's own
+<strong>Look Up</strong> also opens Apple's dictionary.</p>
 <h3 id="books-and-manga"><a class="anchor" href="#books-and-manga" aria-hidden="true" tabindex="-1">#</a>Books and manga</h3>
 <p>PDFs and comics (CBZ) open in a page-by-page reader instead:</p>
 <ul>
@@ -578,7 +716,9 @@ double-tap to zoom. Comics read <strong>right to left</strong> by default; there
 button to change the direction.</li>
 <li>Tap the play button to hear the page read aloud. If a scanned PDF has no
 text to read, open its page, tap <strong>More → Recognize Text</strong>, and wait —
-after that, read-aloud and search work.</li>
+after that, read-aloud and search work. One of your books is recognized
+at a time: if another is already going, this one waits its turn, and the
+button says so (&quot;Waiting for your other book to finish&quot;).</li>
 </ul>
 <h2 id="listening"><a class="anchor" href="#listening" aria-hidden="true" tabindex="-1">#</a>Listening</h2>
 <p>Reader can read any story out loud while you drive, cook, or fall asleep.</p>
@@ -609,8 +749,6 @@ paragraph at a time).</li>
 word and what it <strong>sounds like</strong> (e.g. &quot;Jaime&quot; → &quot;Jay-mee&quot;). Entries can
 apply to every story (<strong>Global</strong>) or just <strong>This story</strong>.</li>
 <li><strong>Sleep</strong> — the timer (below).</li>
-<li><strong>Diag</strong> and <strong>Copy</strong> — for troubleshooting (see
-<a href="#something-went-wrong-with-listening">Something went wrong with listening</a>).</li>
 </ul>
 <p>Speed and voice are remembered on each device separately.</p>
 <h3 id="sleep-timer"><a class="anchor" href="#sleep-timer" aria-hidden="true" tabindex="-1">#</a>Sleep timer</h3>
@@ -642,14 +780,13 @@ mention it to the person who invited you.)</p>
 <h2 id="on-the-go"><a class="anchor" href="#on-the-go" aria-hidden="true" tabindex="-1">#</a>On the go</h2>
 <h3 id="reading-without-a-signal"><a class="anchor" href="#reading-without-a-signal" aria-hidden="true" tabindex="-1">#</a>Reading without a signal</h3>
 <p>Stories marked <strong>✓ Offline</strong> in your library are saved on your phone and
-open without any connection — on a plane, underground, or with Tailscale
-switched off.</p>
+open without any connection — on a plane, underground, or anywhere else
+without signal.</p>
 <ul>
 <li>A single story you import from the <strong>Import</strong> sheet is saved automatically
 on that phone when the import finishes.</li>
-<li>For anything else — series, stories added from a list, files, or stories
-imported on another device — open the story's page and tap <strong>Save
-Offline</strong>.</li>
+<li>For anything else — files, or stories imported on another device — open
+the story's page and tap <strong>Save Offline</strong>.</li>
 </ul>
 <p>Without a connection the Library shows a notice at the top and still lists
 your stories, but only the saved ones will open. Tonight needs a connection.
@@ -670,25 +807,75 @@ there).</li>
 <li><strong>A story link</strong> from any supported site.</li>
 <li><strong>Documents</strong> — Word (DOCX), OpenDocument (ODT), EPUB, Markdown and plain
 text files.</li>
+<li><strong>EPUBs, one per share.</strong> To add several, share them one after another;
+they import in order. An EPUB of a story you already have updates it.</li>
 </ul>
 <p><strong>PDFs and comics can't be shared this way</strong> — they can be very large. Add
 them with <strong>Import → Upload Book (PDF/CBZ)</strong> inside the app instead.</p>
+<p><strong>If your library is full</strong>, a shared file waits on the phone and imports
+the next time you open Reader after you've deleted some stories.</p>
+<p><strong>Sharing a lot at once:</strong> you can share about 30 chapter files every 10
+minutes. If you go past that, Reader says <strong>Upload limit reached: pausing
+about N min</strong>. Nothing is lost: the rest import on their own once the pause
+is over.</p>
+<p><strong>Sharing chapters of your own writing:</strong> start each chapter file with a
+short header, one line each, then a blank line, then the text:</p>
+<pre><code>Story: The Name of Your Story
+Chapter: 10
+Title: Chapter Ten — Radio Silence
+</code></pre>
+<ul>
+<li><code>Story:</code> says which work it belongs to, and <code>Title:</code> names the chapter.</li>
+<li><code>Chapter:</code> says where it goes. Use digits, like <code>10</code> (not <code>Ten</code>).</li>
+<li>If that chapter already exists, Reader asks: <strong>Insert</strong> it there (that
+chapter and the ones after it move down one), <strong>Replace</strong> it, <strong>Add</strong> it
+as a new chapter at the end, or <strong>Discard</strong> the file. Nothing changes
+until you choose.</li>
+<li>If chapters before it are missing (you shared chapter 12 before 11),
+it waits and goes in by itself once they arrive.</li>
+<li>If the header can't be read (a <code>#</code> in front, a blank line between the
+lines, <code>Chapter: Ten</code>), Reader says why and asks, instead of making a new
+story. To fix it, tap <strong>Discard</strong>, correct the file, and share it again.</li>
+<li>Without a <code>Chapter:</code> line, a shared chapter goes at the end.</li>
+<li>A <code>Status: completed</code> line marks the work complete, so it leaves <strong>In progress</strong> (<code>Status: in-progress</code> reopens it). On the story page, <strong>More</strong> → <strong>Mark complete</strong> does the same.</li>
+<li><code>Series: The Name of Your Series</code> and <code>Part: 2</code> put the work in a series of your own. Without <code>Part:</code>, it goes after that series' last part. Capitals, spacing and curly quotes don't matter: &quot;Bob’s Saga&quot; and &quot;bob's saga&quot; are one series. On the story page, <strong>More</strong> → <strong>Series…</strong> does the same.</li>
+</ul>
+<p><strong>Fixing a work's chapters:</strong> on a work you uploaded, open its story page
+and tap <strong>Chapters</strong>, then <strong>Edit</strong>.</p>
+<ul>
+<li><strong>↑ ↓</strong> move a chapter one place. For a long jump, tap the pencil, then
+<strong>Move to…</strong> and type the number.</li>
+<li>The pencil also has <strong>Rename</strong> (the chapter's title only) and <strong>Delete
+chapter</strong>. Delete says how many bookmarks and highlights go with the
+chapter, and can't be undone. A work's only chapter can't be deleted
+(delete the story instead).</li>
+<li>Your reading place stays on the same text, on every device. On this
+phone the reader opens on the new order right away; another device
+that already had the story open shows the new order the next time it
+opens it.</li>
+<li>If the list changed on another device meanwhile, Reader refreshes it and
+asks you to try again, rather than moving the wrong chapter.</li>
+<li>Stories imported from a site (AO3 and the like) can't be edited: a
+re-fetch rebuilds them from the site.</li>
+</ul>
 <h3 id="api-tokens-safari-only"><a class="anchor" href="#api-tokens-safari-only" aria-hidden="true" tabindex="-1">#</a>API tokens (Safari only)</h3>
 <p>The <strong>API Tokens</strong> button at the top of the Library is only for people who
 use Reader in Safari and want an iPhone Shortcut to send links to it. (The
 iPhone app's share button doesn't need one.) A token can only import stories,
 but treat it like a password. Ask the person who invited you for the
-Shortcut.</p>
+Shortcut. It can send links from the forum sites; AO3 stories need the
+iPhone app.</p>
 <h2 id="troubleshooting"><a class="anchor" href="#troubleshooting" aria-hidden="true" tabindex="-1">#</a>Troubleshooting</h2>
-<h3 id="couldnt-reach-your-library"><a class="anchor" href="#couldnt-reach-your-library" aria-hidden="true" tabindex="-1">#</a>&quot;Couldn't reach your library&quot;</h3>
-<p>Reader can't talk to the server. Almost always:</p>
+<h3 id="couldnt-reach-the-reader"><a class="anchor" href="#couldnt-reach-the-reader" aria-hidden="true" tabindex="-1">#</a>&quot;Couldn't reach the reader&quot;</h3>
+<p>Reader can't talk to the server. Almost always that means <strong>no signal</strong>.</p>
 <ul>
-<li><strong>Tailscale is off.</strong> Open the Tailscale app, switch it on, then go back
-to Reader and open the Library tab again.</li>
-<li><strong>No signal.</strong> Your saved (<strong>✓ Offline</strong>) stories still work.</li>
+<li>If the iPhone app shows <strong>Couldn't reach the reader</strong>, tap <strong>Retry</strong> once
+you're connected.</li>
+<li>Without a connection, your saved (<strong>✓ Offline</strong>) stories still open from
+the Library.</li>
 </ul>
-<p>If both are fine and it still can't connect, the server may be down — let
-the person who invited you know.</p>
+<p>If you're connected and it still can't reach the server, the server may be
+down — let the person who invited you know.</p>
 <h3 id="the-screen-dims-but-doesnt-turn-off"><a class="anchor" href="#the-screen-dims-but-doesnt-turn-off" aria-hidden="true" tabindex="-1">#</a>The screen dims but doesn't turn off</h3>
 <p>That's the iPhone's <strong>Always-On Display</strong> (iPhone 14 Pro and later), not
 Reader: when the phone locks, the screen dims instead of going black. To get
@@ -702,37 +889,42 @@ browser has its own list — and the app and Safari can differ. For nicer
 voices on iPhone, go to <strong>Settings → Accessibility → Spoken Content → Voices
 → English</strong> and download an <strong>Enhanced</strong> or <strong>Premium</strong> voice, then choose it
 in Reader's voice menu.</p>
+<p>In a browser on a computer, Reader reads only with voices installed on that
+computer. If it has none, Reader says so when you tap Play: add a voice in
+the computer's settings, or listen in the iPhone app.</p>
 <h3 id="an-import-stopped-partway"><a class="anchor" href="#an-import-stopped-partway" aria-hidden="true" tabindex="-1">#</a>An import stopped partway</h3>
 <p>That's normal for very long stories on some sites. The story is kept as
-<strong>Incomplete</strong> — see <a href="#incomplete-stories">Incomplete stories</a>. Wait about
-half an hour, then tap <strong>Fetch the rest</strong>.</p>
+<strong>Incomplete</strong> — see <a href="#incomplete-stories">Incomplete stories</a>. Wait a
+while, then tap <strong>Fetch the rest</strong> (for an AO3 story, in the iPhone app). If
+you tap too soon, Reader says how many minutes to wait.</p>
 <p>If a fetch seems stuck, open <strong>Import</strong> and look under <strong>In progress</strong> before
 tapping anything again; a second tap while one is running just tells you it's
 already being fetched.</p>
+<h3 id="new-uploads-and-imports-are-paused"><a class="anchor" href="#new-uploads-and-imports-are-paused" aria-hidden="true" tabindex="-1">#</a>&quot;New uploads and imports are paused&quot;</h3>
+<p>The server is low on space for a while, so it isn't taking new stories:
+uploads, imports, <strong>Re-fetch</strong> and <strong>Check for Updates</strong> wait. Reading,
+listening and export still work. A link or file you shared to Reader is
+kept and tried again every few minutes while the app is open, and the next
+time you open it. For anything else, try again later.</p>
 <h3 id="something-went-wrong-with-listening"><a class="anchor" href="#something-went-wrong-with-listening" aria-hidden="true" tabindex="-1">#</a>Something went wrong with listening</h3>
-<p>If narration stops, skips, or misbehaves, send the person who invited you a
-diagnostics file:</p>
-<ol>
-<li>Open the story, tap the <strong>speaker button</strong>, and make sure the settings are
-showing.</li>
-<li>Tap <strong>Diag</strong> (bottom right). In the iPhone app, the share sheet opens with
-a small file — send it by Messages or Mail. <strong>Copy</strong> puts the same
-information on the clipboard instead, to paste into a message.</li>
-</ol>
-<p>The file records what the voice and the app were doing — play, pause, skips,
-which voice, how long things took to load, whether the phone was warm — not
-the text of your stories.</p>
-<p>In the iPhone app there's also a <strong>Route</strong> button next to Diag. Leave it on
-<strong>App</strong> unless the person who invited you asks you to try another setting
-(for example if narration sounds choppy over CarPlay).</p>
+<p>If narration stops, skips, or misbehaves, tell the person who invited you
+what happened: roughly when, in which story, whether you were in the iPhone
+app or Safari, and whether you were listening through the phone's speaker,
+headphones, Bluetooth or CarPlay.</p>
 <p>When the app itself hits an error, it quietly sends a short technical report
 to the server so it can be fixed. The report never includes what you're
 reading.</p>
 
   </main>
-  <footer>
-    <p><a href="../">paperhurts</a> &middot; <a href="#">back to top</a></p>
-  </footer>
+  <p class="to-top"><a href="#">back to top</a></p>
 </div>
+<footer class="site-footer">
+  <nav aria-label="Site">
+    <a href="../guide/" aria-current="page">User guide</a>
+  </nav>
+  <p>paperhurts reader is unofficial and is not affiliated with any site you import from.</p>
+  <p>All stories belong to their authors.</p>
+  <p class="copy">© 2026 paperhurts LLC</p>
+</footer>
 </body>
 </html>
