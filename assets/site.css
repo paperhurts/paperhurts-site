@@ -327,6 +327,8 @@ a:focus-visible, .btn:focus-visible { outline: 2px solid var(--accent-glow); out
 .pricing .fine { font-size: 1rem; color: var(--text-dim); margin-top: 1rem; }
 
 /* ── Footer ─────────────────────────────────────────────────────── */
+/* The guide (/guide/) carries its own copy of this footer and of these
+ * rules; change both together. */
 .site-footer {
   position: relative; z-index: 1;
   max-width: 700px;
