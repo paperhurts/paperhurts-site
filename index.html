@@ -1,461 +1,108 @@
 <!DOCTYPE html>
-<html lang="en"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-
+<html lang="en">
+<head>
+<meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <meta name="robots" content="noarchive">
-<title>paperhurts</title>
-<link rel="preconnect" href="https://fonts.googleapis.com/">
-<link rel="preconnect" href="https://fonts.gstatic.com/" crossorigin="">
+<meta name="description" content="paperhurts reader: keep your own copies of the stories you love, drop them in, and have them read aloud with your device's own voices. Private, exportable, no ads, no tracking.">
+<title>paperhurts reader · your fic library, read aloud</title>
 <link href="./index_files/fonts.css" rel="stylesheet">
-<style>
-  :root {
-    --bg-deep: #0a0a0f;
-    --bg-surface: #12121a;
-    --bg-card: #1a1a25;
-    --text-primary: #e8e4df;
-    --text-dim: #8a8694;
-    --text-faint: #4a4654;
-    --accent-warm: #c4956a;
-    --accent-glow: #d4a574;
-    --accent-ember: #b8755a;
-    --page-cream: #f5f0e8;
-    --ink: #2a2520;
-  }
-
-  * { margin: 0; padding: 0; box-sizing: border-box; }
-
-  body {
-    background: var(--bg-deep);
-    color: var(--text-primary);
-    font-family: 'Crimson Pro', Georgia, serif;
-    min-height: 100vh;
-    overflow-x: hidden;
-  }
-
-  /* Grain overlay */
-  body::before {
-    content: '';
-    position: fixed;
-    top: 0; left: 0; right: 0; bottom: 0;
-    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.03'/%3E%3C/svg%3E");
-    pointer-events: none;
-    z-index: 1000;
-  }
-
-  /* Ambient light effect */
-  .ambient {
-    position: fixed;
-    top: -30%;
-    left: 50%;
-    transform: translateX(-50%);
-    width: 120vw;
-    height: 60vh;
-    background: radial-gradient(ellipse, rgba(196, 149, 106, 0.04) 0%, transparent 70%);
-    pointer-events: none;
-    z-index: 0;
-  }
-
-  .ambient-bottom {
-    position: fixed;
-    bottom: -20%;
-    left: 50%;
-    transform: translateX(-50%);
-    width: 100vw;
-    height: 40vh;
-    background: radial-gradient(ellipse, rgba(184, 117, 90, 0.03) 0%, transparent 70%);
-    pointer-events: none;
-    z-index: 0;
-  }
-
-  /* Main layout */
-  .container {
-    position: relative;
-    z-index: 1;
-    min-height: 100vh;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    padding: 2rem;
-  }
-
-  /* The book / page element */
-  .page {
-    position: relative;
-    max-width: 520px;
-    width: 100%;
-    padding: 3.5rem 3rem;
-    background: linear-gradient(175deg, var(--bg-surface) 0%, var(--bg-card) 100%);
-    border: 1px solid rgba(196, 149, 106, 0.08);
-    border-radius: 2px;
-    box-shadow:
-      0 0 0 1px rgba(196, 149, 106, 0.03),
-      0 20px 60px rgba(0, 0, 0, 0.5),
-      0 1px 3px rgba(0, 0, 0, 0.3),
-      inset 0 1px 0 rgba(255, 255, 255, 0.02);
-    animation: pageAppear 1.2s ease-out;
-  }
-
-  .page::before {
-    content: '';
-    position: absolute;
-    top: 0; left: 0; right: 0;
-    height: 1px;
-    background: linear-gradient(90deg, transparent, rgba(196, 149, 106, 0.15), transparent);
-  }
-
-  /* Spine shadow */
-  .page::after {
-    content: '';
-    position: absolute;
-    top: 8px;
-    left: -1px;
-    bottom: 8px;
-    width: 3px;
-    background: linear-gradient(180deg, transparent, rgba(196, 149, 106, 0.06), transparent);
-    border-radius: 0 1px 1px 0;
-  }
-
-  @keyframes pageAppear {
-    0% { opacity: 0; transform: translateY(20px) scale(0.98); }
-    100% { opacity: 1; transform: translateY(0) scale(1); }
-  }
-
-  /* Logo / Title */
-  .title-block {
-    text-align: center;
-    margin-bottom: 2.5rem;
-  }
-
-  .title {
-    font-family: 'Crimson Pro', Georgia, serif;
-    font-weight: 200;
-    font-size: 3.2rem;
-    letter-spacing: 0.15em;
-    color: var(--text-primary);
-    text-transform: lowercase;
-    line-height: 1;
-    margin-bottom: 0.3rem;
-    animation: titleFade 1.8s ease-out 0.3s both;
-  }
-
-  .title span {
-    color: var(--accent-warm);
-    font-style: italic;
-    font-weight: 300;
-  }
-
-  @keyframes titleFade {
-    0% { opacity: 0; letter-spacing: 0.3em; }
-    100% { opacity: 1; letter-spacing: 0.15em; }
-  }
-
-  .rule {
-    width: 60px;
-    height: 1px;
-    background: linear-gradient(90deg, transparent, var(--accent-warm), transparent);
-    margin: 1.2rem auto;
-    animation: ruleFade 2s ease-out 0.6s both;
-  }
-
-  @keyframes ruleFade {
-    0% { opacity: 0; width: 0; }
-    100% { opacity: 1; width: 60px; }
-  }
-
-  .subtitle {
-    font-family: 'JetBrains Mono', monospace;
-    font-weight: 300;
-    font-size: 0.7rem;
-    letter-spacing: 0.25em;
-    color: var(--text-dim);
-    text-transform: uppercase;
-    animation: subtitleFade 2s ease-out 0.8s both;
-  }
-
-  @keyframes subtitleFade {
-    0% { opacity: 0; }
-    100% { opacity: 1; }
-  }
-
-  /* Content */
-  .content {
-    animation: contentFade 2s ease-out 1s both;
-  }
-
-  @keyframes contentFade {
-    0% { opacity: 0; transform: translateY(10px); }
-    100% { opacity: 1; transform: translateY(0); }
-  }
-
-  .description {
-    font-size: 1.15rem;
-    font-weight: 300;
-    line-height: 1.75;
-    color: var(--text-dim);
-    text-align: center;
-    margin-bottom: 2.5rem;
-    font-style: italic;
-  }
-
-  .description em {
-    color: var(--accent-glow);
-    font-style: normal;
-  }
-
-  /* Sources line */
-  .sources {
-    font-family: 'JetBrains Mono', monospace;
-    font-size: 0.62rem;
-    letter-spacing: 0.18em;
-    color: var(--text-faint);
-    text-transform: uppercase;
-    text-align: center;
-    margin: -1.5rem 0 2.25rem;
-  }
-
-  /* Features list */
-  .features {
-    display: flex;
-    flex-direction: column;
-    gap: 0.7rem;
-    margin-bottom: 2.25rem;
-    padding: 0 0.5rem;
-  }
-
-  .feature-group-label {
-    font-family: 'JetBrains Mono', monospace;
-    font-size: 0.6rem;
-    font-weight: 400;
-    letter-spacing: 0.25em;
-    color: var(--accent-warm);
-    text-transform: uppercase;
-    opacity: 0.75;
-    margin-top: 0.75rem;
-    margin-bottom: 0.15rem;
-  }
-
-  .feature-group-label:first-child {
-    margin-top: 0;
-  }
-
-  .feature {
-    position: relative;
-    padding-left: 1.4rem;
-    font-size: 0.95rem;
-    color: var(--text-dim);
-    font-weight: 300;
-    line-height: 1.55;
-  }
-
-  .feature::before {
-    content: '\2013';
-    position: absolute;
-    left: 0;
-    top: 0;
-    color: var(--accent-warm);
-  }
-
-  .feature strong {
-    color: var(--text-primary);
-    font-weight: 400;
-  }
-
-  /* CTA / Links */
-  .links {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: 1rem;
-    padding-top: 1.5rem;
-    border-top: 1px solid rgba(196, 149, 106, 0.06);
-  }
-
-  .link-primary {
-    display: inline-flex;
-    align-items: center;
-    gap: 0.6rem;
-    font-family: 'JetBrains Mono', monospace;
-    font-size: 0.75rem;
-    font-weight: 400;
-    letter-spacing: 0.15em;
-    text-transform: uppercase;
-    color: var(--accent-warm);
-    text-decoration: none;
-    padding: 0.75rem 1.5rem;
-    border: 1px solid rgba(196, 149, 106, 0.2);
-    border-radius: 2px;
-    transition: all 0.4s ease;
-    position: relative;
-    overflow: hidden;
-  }
-
-  .link-primary::before {
-    content: '';
-    position: absolute;
-    top: 0; left: -100%;
-    width: 100%; height: 100%;
-    background: linear-gradient(90deg, transparent, rgba(196, 149, 106, 0.05), transparent);
-    transition: left 0.5s ease;
-  }
-
-  .link-primary:hover {
-    border-color: rgba(196, 149, 106, 0.4);
-    color: var(--accent-glow);
-    box-shadow: 0 0 20px rgba(196, 149, 106, 0.05);
-  }
-
-  .link-primary:hover::before {
-    left: 100%;
-  }
-
-  .link-primary svg {
-    width: 16px;
-    height: 16px;
-    fill: currentColor;
-  }
-
-  .status {
-    font-family: 'JetBrains Mono', monospace;
-    font-size: 0.65rem;
-    letter-spacing: 0.2em;
-    color: var(--text-faint);
-    text-transform: uppercase;
-  }
-
-  .coming-note {
-    font-family: 'JetBrains Mono', monospace;
-    font-size: 0.6rem;
-    letter-spacing: 0.18em;
-    color: var(--text-faint);
-    text-transform: uppercase;
-    font-style: normal;
-  }
-
-  .coming-note em {
-    color: var(--accent-warm);
-    font-style: normal;
-    opacity: 0.85;
-  }
-
-  .status .dot {
-    display: inline-block;
-    width: 6px;
-    height: 6px;
-    background: var(--accent-ember);
-    border-radius: 50%;
-    margin-right: 0.5rem;
-    animation: pulse 3s ease-in-out infinite;
-    vertical-align: middle;
-  }
-
-  @keyframes pulse {
-    0%, 100% { opacity: 0.4; }
-    50% { opacity: 1; box-shadow: 0 0 8px rgba(184, 117, 90, 0.4); }
-  }
-
-  /* Footer */
-  .footer {
-    margin-top: 3rem;
-    text-align: center;
-    animation: footerFade 2s ease-out 1.5s both;
-  }
-
-  @keyframes footerFade {
-    0% { opacity: 0; }
-    100% { opacity: 1; }
-  }
-
-  .footer p {
-    font-family: 'JetBrains Mono', monospace;
-    font-size: 0.6rem;
-    letter-spacing: 0.2em;
-    color: var(--text-faint);
-    text-transform: uppercase;
-  }
-
-  /* Responsive */
-  @media (max-width: 580px) {
-    .page { padding: 2.5rem 2rem; }
-    .title { font-size: 2.4rem; }
-    .description { font-size: 1.05rem; }
-  }
-
-  /* Cursor glow effect */
-  .cursor-glow {
-    position: fixed;
-    width: 300px;
-    height: 300px;
-    background: radial-gradient(circle, rgba(196, 149, 106, 0.015) 0%, transparent 70%);
-    pointer-events: none;
-    z-index: 0;
-    transform: translate(-50%, -50%);
-    transition: left 0.3s ease, top 0.3s ease;
-  }
-</style>
+<link href="./assets/site.css" rel="stylesheet">
 </head>
 <body>
-
 <div class="ambient"></div>
-<div class="ambient-bottom"></div>
-<div class="cursor-glow" id="cursorGlow" style="left: 479px; top: 245px;"></div>
 
-<div class="container">
-  <div class="page">
-    <div class="title-block">
-      <h1 class="title">paper<span>hurts</span></h1>
-      <div class="rule"></div>
-      <p class="subtitle">a personal reading companion</p>
+<main class="wrap">
+  <p class="draft-banner"><strong>Draft</strong> · This site is a draft pending legal review. The policies on it are not in effect yet.</p>
+
+  <header class="hero">
+    <div class="wordmark-lg">paper<span>hurts</span></div>
+    <p class="product">reader</p>
+    <hr class="rule">
+    <h1 class="pitch">Your fic library, <em>read aloud.</em></h1>
+    <p class="lede">Keep your own copies of the stories you love, drop them into paperhurts reader, and listen while you drive, cook or fall asleep. Your library stays private, and you can take it with you any time.</p>
+    <div class="cta-row">
+      <a class="btn btn-solid" href="#how">How it works</a>
+      <a class="btn" href="#free">Free to use</a>
     </div>
+  </header>
 
-    <div class="content">
-      <p class="description">
-        Your fics. Your library. <em>Your rules.</em><br>
-        Import from anywhere, read it your way,<br>
-        and keep every word in a library that's yours alone.
-      </p>
+  <section class="section" id="how">
+    <h2>How it works</h2>
+    <ol class="steps">
+      <li><strong>Keep your copies.</strong> Save the stories you love as EPUB files, with the download button many fiction sites offer or with free tools like FicHub and FanFicFare. The copies are yours.</li>
+      <li><strong>Drop them in.</strong> Add many files at once. Each story keeps its title, author and chapters. Word, Markdown, PDF and CBZ comic files work too.</li>
+      <li><strong>Listen.</strong> paperhurts reads aloud with your device's own voices, and the page follows along. Change the speed, set a sleep timer, and teach it how to say the names it gets wrong.</li>
+      <li><strong>Take it with you.</strong> Export a story as an EPUB whenever you like. Your copies never get locked in.</li>
+    </ol>
+  </section>
 
-      <p class="sources">ao3 · spacebattles · ffn · sufficient velocity · &amp; more</p>
+  <section class="section" id="writing">
+    <h2>Your own writing, too</h2>
+    <p class="intro">Write a chapter, hear it read aloud, fix it, then post it. Your ear catches the missing word and the sentence that runs on: the things your eye skips because it knows what you meant.</p>
+    <ul class="points">
+      <li><strong>A chapter at a time.</strong> In the iPhone app, share a chapter file from wherever you write it. Two short lines at the top say which story and which chapter, and it goes into that story as that chapter.</li>
+      <li><strong>Fix it and send it again.</strong> Share the revised file, choose Replace, and the new version takes the old one's place. Mark what to fix with highlights and notes while you listen.</li>
+      <li><strong>Markdown, plain text or Word.</strong> The iPhone app's share sheet takes Markdown and text files. In any browser, the upload button takes those and Word files, Google Docs exports included.</li>
+      <li><strong>Still private.</strong> Your drafts sit in your library only, like everything else in it.</li>
+    </ul>
+  </section>
 
-      <div class="features">
-        <div class="feature-group-label">The reading experience</div>
-        <div class="feature"><strong>Seven themes, or build your own</strong> — sepia, AMOLED night, solarized, and a custom color builder</div>
-        <div class="feature"><strong>Read aloud, screen off</strong> — narration with lock-screen controls and a sleep timer</div>
-        <div class="feature"><strong>Your fonts, your place</strong> — typography you control, position that follows you everywhere</div>
-        <div class="feature"><strong>Reads offline</strong> — installs like an app, works without signal</div>
+  <section class="section">
+    <h2>Reading, your way</h2>
+    <ul class="points two-col">
+      <li><strong>Themes, or your own colours</strong> Fonts, size and spacing too.</li>
+      <li><strong>Reads offline</strong> Add it to your home screen and keep reading without a signal.</li>
+      <li><strong>Your place, everywhere</strong> Pick up on any device where you left off.</li>
+      <li><strong>Bookmarks, highlights and notes</strong> Plus a built-in dictionary.</li>
+      <li><strong>Books and comics too</strong> PDFs, comics and manga sit beside your stories.</li>
+      <li><strong>Runs in your browser</strong> On a phone, a tablet or a computer.</li>
+    </ul>
+  </section>
 
-        <div class="feature-group-label">Yours, entirely</div>
-        <div class="feature"><strong>Invite-only, run for friends</strong> — a small private server where your library is yours alone, never shared</div>
-        <div class="feature"><strong>Bring your own books</strong> — EPUBs, PDFs, comics &amp; manga, Word and Markdown files, right beside your fics</div>
+  <section class="section">
+    <h2>What we don't do</h2>
+    <ul class="points">
+      <li><strong>No ads.</strong> Not beside your stories, not anywhere.</li>
+      <li><strong>No tracking.</strong> No analytics, no trackers and no third-party scripts, on this site or in the app.</li>
+      <li><strong>No sharing.</strong> Your library is private. We never publish it or sell it, and other readers can't see it.</li>
+      <li><strong>No passwords for other sites.</strong> paperhurts never asks for your login to any site you read on.</li>
+      <li><strong>No charge for stories.</strong> We don't sell stories or charge for access to any of them.</li>
+    </ul>
+    <p class="ai-line">Built by one developer with AI coding help. The app never sends your library to any AI service, and narration uses your device's own voices.</p>
+  </section>
 
-        <div class="feature-group-label">Your own writing, too</div>
-        <div class="feature"><strong>Hear it before you post it</strong> — write a chapter, hear it read aloud, fix it, then post it. Your ear catches the missing word and the sentence that runs on: the things your eye skips because it knows what you meant</div>
-        <div class="feature"><strong>A chapter at a time</strong> — in the iPhone app, share a chapter file from wherever you write it. A short header at the top says which story and which chapter, and it goes into that story as that chapter</div>
-        <div class="feature"><strong>Fix it and send it again</strong> — share the revised file, choose Replace, and the new version takes the old one's place. Mark what to fix with highlights and notes while you listen</div>
-        <div class="feature"><strong>Markdown, plain text or Word</strong> — the iPhone app's share sheet takes Markdown and text files. In any browser, the upload buttons take those and Word files, Google Docs exports included</div>
-        <div class="feature"><strong>Still private</strong> — your drafts sit in your library only, like everything else in it</div>
-      </div>
-
-      <div class="links">
-        <a href="guide/" class="link-primary">User guide &rarr;</a>
-        <p class="status"><span class="dot"></span>Live &amp; self-hosted</p>
-      </div>
+  <section class="section" id="free">
+    <h2>Free to use</h2>
+    <p class="intro">paperhurts reader is in a small invited beta, and it's free for as long as paperhurts runs. If it ever shuts down, every account gets at least 30 days' notice to export.</p>
+    <p>Your account comes with these limits, and paying never changes a limit:</p>
+    <ul class="points">
+      <li><strong>Stories</strong> 1,000 in your library.</li>
+      <li><strong>Page images</strong> 2 GB, for PDF and CBZ files.</li>
+      <li><strong>Forum sites</strong> 20 imports a day, plus one check a day for new chapters on each forum story you already have.</li>
+    </ul>
+    <div class="pricing">
+      <p class="label">Supporter membership</p>
+      <p class="price-note">Not open yet.</p>
+      <a class="btn btn-solid" href="mailto:support@paperhurts.dev?subject=Supporter%20membership">Tell me when supporter membership opens</a>
+      <p class="fine">Or write to <a href="mailto:support@paperhurts.dev?subject=Supporter%20membership">support@paperhurts.dev</a> with "Supporter membership" in the subject.<br><a href="membership/">Free accounts and membership</a></p>
     </div>
-  </div>
+  </section>
+</main>
 
-  <div class="footer">
-    <p>© 2026 paperhurts</p>
-  </div>
-</div>
-
-<script>
-  // Subtle cursor glow
-  const glow = document.getElementById('cursorGlow');
-  document.addEventListener('mousemove', (e) => {
-    glow.style.left = e.clientX + 'px';
-    glow.style.top = e.clientY + 'px';
-  });
-</script>
-
-
-</body></html>
+<footer class="site-footer">
+  <nav aria-label="Site">
+    <a href="membership/">Membership</a>
+    <a href="terms/">Terms</a>
+    <a href="privacy/">Privacy</a>
+    <a href="refunds/">Refunds</a>
+    <a href="copyright/">Copyright</a>
+    <a href="contact/">Contact</a>
+    <a href="guide/">User guide</a>
+  </nav>
+  <p>paperhurts reader is unofficial and is not affiliated with any site you import from.</p>
+  <p>All stories belong to their authors.</p>
+  <p class="copy">© 2026 paperhurts LLC</p>
+</footer>
+</body>
+</html>
